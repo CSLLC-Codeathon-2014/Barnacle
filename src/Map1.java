@@ -2,9 +2,10 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class Map1 extends BasicGameState {
-	Image land;
 	private int state;
+	Image land;
 	Image chicken;
+	Image fire;
 	int chickX=450;
 	int chickY=400;
 	int VelX=0;
@@ -18,23 +19,30 @@ public class Map1 extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		land = new Image("bg.png");
-		chicken= new Image("playNow.png");
+		chicken= new Image("chickun.png");
+		fire= new Image("chickun.png");
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
-		chicken.draw(chickX, chickY, gc.getWidth()/18, gc.getHeight()/32);
+		chicken.draw(chickX, chickY, gc.getWidth()/9, gc.getHeight()/8);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-		if(chickY>590 && chickY<635 && chickX>350 && chickX<1250){
-			chickY=600;
+		if(chickY>=520 && chickY<635 && chickX>350 && chickX<1250){
+			chickY=520;
 			VelY=0;
+		}
+		if(chickY>610 && chickX<600 && chickX>200){
+			chickX=200;
+		}
+		if(chickY>610 && chickX>600 && chickX<1250){
+			chickX=1250;
 		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			if(VelY<5)
@@ -45,6 +53,7 @@ public class Map1 extends BasicGameState {
 		VelY=20;
 		if(VelY<-20)
 			VelY=-20;
+		
 		if(input.isKeyDown(Input.KEY_A)){
 		if(VelX>1)
 			VelX=1;
@@ -54,7 +63,8 @@ public class Map1 extends BasicGameState {
 			if(VelX<-1)
 				VelX=-1;
 			VelX+=2;
-			}
+		}
+		
 		if(VelX<-20)
 			VelX=-20;
 			if(VelX>20)
