@@ -10,7 +10,12 @@ public class Map1 extends BasicGameState {
 	int chickY=400;
 	int VelX=0;
 	int VelY=0;
-
+	int fireX = -20;
+	int fireY = -20;
+	Boolean X=false;
+	Velocity player1;
+	Velocity proj1;
+	
 	public Map1(int state) {
 		 this.state = state;
 	}
@@ -20,7 +25,8 @@ public class Map1 extends BasicGameState {
 			throws SlickException {
 		land = new Image("bg.png");
 		chicken= new Image("chickun.png");
-		fire= new Image("chickun.png");
+		fire= new Image("fire.png");
+		player1 = new Velocity(chickX, chickY, VelX, VelY);
 	}
 
 	@Override
@@ -28,54 +34,27 @@ public class Map1 extends BasicGameState {
 			throws SlickException {
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		chicken.draw(chickX, chickY, gc.getWidth()/9, gc.getHeight()/8);
+		fire.draw(fireX, fireY, 25, 25);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-		if(chickY>=520 && chickY<635 && chickX>350 && chickX<1250){
-			chickY=520;
-			VelY=0;
+		player1.CalcPos(gc);
+		chickX=player1.posX();
+		chickY=player1.posY();
+		if(input.isKeyDown(Input.KEY_I)){
+			X=true;
+			fireX=chickX;
+			fireY=chickY;
+			proj1 = new Velocity(fireX, fireY, 20, -10);
 		}
-		if(chickY>610 && chickX<600 && chickX>200){
-			chickX=200;
+		if(X==true){
+		proj1.CalcProj();
+		fireX=proj1.posX();
+		fireY=proj1.posY();
 		}
-		if(chickY>610 && chickX>600 && chickX<1250){
-			chickX=1250;
-		}
-		if(input.isKeyDown(Input.KEY_SPACE)){
-			if(VelY<5)
-			VelY=20;
-		}
-		VelY--;
-		if(VelY>20)
-		VelY=20;
-		if(VelY<-20)
-			VelY=-20;
-		
-		if(input.isKeyDown(Input.KEY_A)){
-		if(VelX>1)
-			VelX=1;
-		VelX-=2;
-		}
-		if(input.isKeyDown(Input.KEY_D)){
-			if(VelX<-1)
-				VelX=-1;
-			VelX+=2;
-		}
-		
-		if(VelX<-20)
-			VelX=-20;
-			if(VelX>20)
-				VelX=20;
-		if(VelX>0)
-		VelX--;
-		if(VelX<0)
-		VelX++;
-		
-		chickY=chickY-VelY;
-		chickX=chickX+VelX;
 	}
 
 	@Override
