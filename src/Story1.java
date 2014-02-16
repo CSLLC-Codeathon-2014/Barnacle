@@ -2,8 +2,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class Story1 extends BasicGameState {
-	Image land;
 	private int state;
+	int i; 
 
 	public Story1(int state) {
 		 this.state = state;
@@ -12,22 +12,20 @@ public class Story1 extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		land = new Image("bg.png");
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		land.draw(0, 0, gc.getWidth(), gc.getHeight());
+		Input input = gc.getInput();
+		if(input.isKeyDown(Input.KEY_SPACE)){
+			
+		}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		Input input = gc.getInput();
-		if(input.isKeyDown(Input.KEY_SPACE)){
-			System.out.println("Printed space!");
-		}
 	}
 
 	@Override

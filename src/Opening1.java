@@ -41,6 +41,13 @@ public class Opening1 extends BasicGameState{
 	            sbg.enterState(Barnacle.map1);
 	         }
 	     }
+	     
+	     if((posX>((gc.getWidth()/2)-100) && posX<((gc.getWidth()/2)+100)) && (posY>((gc.getHeight()/4)-25) && posY<((gc.getHeight()/4)+25)))
+	     {
+	         if(Mouse.isButtonDown(0)){
+	            sbg.enterState(Barnacle.story1);
+	         }
+	     }
 	     //exitting the program
 	     if((posX>(gc.getWidth()-300) && posX<(gc.getWidth()-100) && (posY>(50) && posY<(100))))
 	     {

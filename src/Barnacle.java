@@ -40,8 +40,8 @@ public class Barnacle extends StateBasedGame{
 		try
 		{
 			appgc = new AppGameContainer(new Barnacle(gamename));
-			appgc.setDisplayMode(1280, 720, false);
-			//appgc.setDisplayMode(1600, 900, true);
+			//appgc.setDisplayMode(1280, 720, false);
+			appgc.setDisplayMode(1600, 900, true);
 			appgc.setTargetFrameRate(60);
 			appgc.start();
 		}
