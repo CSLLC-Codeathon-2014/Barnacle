@@ -15,15 +15,27 @@ public class Velocity {
 	
 	public void CalcPosPlay1(GameContainer gc){
 		Input input = gc.getInput();
-		if(chickY>=520 && chickY<635 && chickX>350 && chickX<1250){
+		if(chickY>=520 && chickY<635 && chickX>250 && chickX<1250){
 			chickY=520;
 			VelY=0;
 		}
-		if(chickY>610 && chickX<600 && chickX>200){
+		if(chickY>600 && chickX<250 && chickX>200){
 			chickX=200;
 		}
-		if(chickY>610 && chickX>600 && chickX<1250){
+		if(chickY>600 && chickX>1200 && chickX<1250){
 			chickX=1250;
+		}
+		if(chickX>1500){
+			chickX=1500;
+		}
+		if(chickX<-50){
+			chickX=-50;
+		}
+		if(chickY<-50){
+			chickY=-50;
+		}
+		if(chickY>800){
+			chickY=800;
 		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			if(VelY<5)
@@ -65,10 +77,22 @@ public class Velocity {
 		if(chickY>610 && chickX<600 && chickX>200){
 			chickX=200;
 		}
+		if(chickX>1500){
+			chickX=1500;
+		}
+		if(chickX<-50){
+			chickX=-50;
+		}
+		if(chickY<-50){
+			chickY=-50;
+		}
+		if(chickY>800){
+			chickY=800;
+		}
 		if(chickY>610 && chickX>600 && chickX<1250){
 			chickX=1250;
 		}
-		if(input2.isKeyDown(Input.KEY_ENTER)){
+		if(input2.isKeyDown(Input.KEY_NUMPAD8)){
 			if(VelY<5)
 			VelY=20;
 		}
@@ -77,12 +101,12 @@ public class Velocity {
 		VelY=20;
 		if(VelY<-20)
 			VelY=-20;
-		if(input2.isKeyDown(Input.KEY_LEFT)){
+		if(input2.isKeyDown(Input.KEY_NUMPAD4)){
 		if(VelX>1)
 			VelX=1;
 		VelX-=2;
 		}
-		if(input2.isKeyDown(Input.KEY_RIGHT)){
+		if(input2.isKeyDown(Input.KEY_NUMPAD6)){
 			if(VelX<-1)
 				VelX=-1;
 			VelX+=2;
@@ -105,7 +129,7 @@ public class Velocity {
 			chickY=999;
 		}
 		if(chickY>610 && chickX<600 && chickX>200){
-			chickX=200;
+			chickX=300;
 		}
 		if(chickY>610 && chickX>600 && chickX<1250){
 			chickX=1250;
