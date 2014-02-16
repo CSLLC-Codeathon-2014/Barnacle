@@ -67,8 +67,6 @@ public class Map1 extends BasicGameState {
 			bool1=true;
 			fire1X=play1X;
 			fire1Y=play1Y;
-			System.out.println("fire1Y part 1 is " + fire1Y);
-			System.out.println("play1Y is " + play1Y);
 			proj1 = new Velocity(fire1X+80, fire1Y, 20, -5);
 		}
 		
@@ -76,7 +74,6 @@ public class Map1 extends BasicGameState {
 		proj1.CalcProj();
 		fire1X=proj1.posX();
 		fire1Y=proj1.posY();
-		System.out.println("fire1Y part 2 is " + fire1Y);
 		}
 		//END OF PLAYER 1
 		//
@@ -90,6 +87,8 @@ public class Map1 extends BasicGameState {
 			bool2=true;
 			fire2X=play2X;
 			fire2Y=play2Y;
+			System.out.println("fire1Y part 1 is " + fire1Y);
+			System.out.println("play1Y is " + play1Y);
 			proj2 = new Velocity(fire2X+80, fire2Y, -20, -5);
 		}
 		
