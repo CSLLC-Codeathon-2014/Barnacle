@@ -1,5 +1,10 @@
 import java.awt.Font;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import org.newdawn.slick.*;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.geom.*;
 
@@ -7,8 +12,8 @@ import org.newdawn.slick.geom.*;
 public class Map2 extends BasicGameState {
 	private int state;
 	Image land;
-	Image chicken1;
-	Image chicken2;
+	static Image chicken1;
+	static Image chicken2;
 	Image fire1;
 	Image fire2;
 	Image wnner;
@@ -44,6 +49,16 @@ public class Map2 extends BasicGameState {
 	public String player2Score = "0";
 	public String winner = "";
 	TrueTypeFont font;
+	static boolean dogepossible;
+	static boolean cagepossible;
+    private Audio music;
+	static boolean musicCheck=true;
+	Audio wow;
+	boolean wowCheck = true;
+    private Audio shoot;
+	static boolean shootCheck=true;
+    private Audio shoot2;
+	static boolean shootCheck2=true;
 	
 	public Map2(int state) {
 		 this.state = state;
@@ -52,7 +67,7 @@ public class Map2 extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		land = new Image("ice.png");
+		land = new Image("paradise.png");
 		chicken1= new Image("chickun1.png");
 		chicken2= new Image("chickun2.png");
 		fire1= new Image("fure.png");
@@ -62,8 +77,12 @@ public class Map2 extends BasicGameState {
 		player2 = new Velocity(play2X, play2Y, Vel2X, Vel2Y);
 		Font awtFont = new Font("", Font.PLAIN, 24);
 		font = new TrueTypeFont(awtFont, true);
-	    Music openingMenuMusic = new Music("hendl.ogg");
-	    openingMenuMusic.loop();
+		try {
+	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("src/fire.ogg"));
+        } catch (IOException e) {e.printStackTrace();}
+		try {
+	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("src/fire.ogg"));
+        } catch (IOException e) {e.printStackTrace();}
 	}
 	
 	@Override
@@ -72,6 +91,9 @@ public class Map2 extends BasicGameState {
 		g.setFont(font); 
 		g.setColor(Color.red);
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
+		if(dogepossible)
+		chicken1.draw(play1X, play1Y, gc.getWidth()/18, gc.getHeight()/8);
+		else
 		chicken1.draw(play1X, play1Y, gc.getWidth()/9, gc.getHeight()/8);
 		chicken2.draw(play2X, play2Y, gc.getWidth()/18, gc.getHeight()/8);
 		if(CanBeHit2==true)
@@ -83,10 +105,34 @@ public class Map2 extends BasicGameState {
 		g.drawString("" + winner, 700, 650);
 		wnner.draw(winx, winy);
 	}
+	
+
+	public static void secondinit() 
+			throws SlickException{
+		if(dogepossible==true)
+		    chicken1= new Image("doge.png");
+		else if (dogepossible==false)
+		    chicken1= new Image("chickun1.png");
+		if(cagepossible==true)
+		    chicken2= new Image("cage.png");
+		else if (cagepossible==false)
+		    chicken2= new Image("chickun2.png");
+	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		if(musicCheck){
+			try {
+		        music = AudioLoader.getAudio("OGG", new FileInputStream("src/attraction.ogg"));
+		        } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+			music.playAsSoundEffect(1.0f, 1.0f, false);
+			musicCheck=false;
+			}
+			else{}
+		
 		Input input = gc.getInput();
 		projCircle1= new Circle(fire1X+25, fire1Y+25, 40);
 		projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
@@ -97,13 +143,18 @@ public class Map2 extends BasicGameState {
 		play1X=player1.posX();
 		play1Y=player1.posY();
 		if(input.isKeyDown(Input.KEY_T)){
-			bool1=true;
+			shootCheck=true;
+			bool1=true; 
 			fire1X=play1X;
 			fire1Y=play1Y;
 			projCircle1= new Circle(fire1X+25, fire1Y+25, 40);
-			proj1 = new Velocity(fire1X+80, fire1Y, 20, -4);
+			proj1 = new Velocity(fire1X+80, fire1Y, 20, -2);
 		}
-		if(bool1==true){
+		if(bool1==true && !(input.isKeyDown(Input.KEY_T))){
+			if(shootCheck==true){
+					shoot.playAsSoundEffect(1.0f, 1.0f, false);
+				shootCheck=false;
+			}
 		proj1.CalcProj();
 		projCircle1= new Circle(fire1X+25, fire1Y+25, 40);
 		fire1X=proj1.posX();
@@ -123,9 +174,14 @@ public class Map2 extends BasicGameState {
 			fire2Y=play2Y;
 			projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
 			proj2 = new Velocity(fire2X+30, fire2Y, -20, -2);
+			shootCheck2=true;
 		}
 		
-		if(bool2==true){
+		if(bool2==true && !(input.isKeyDown(Input.KEY_ENTER))){
+			if(shootCheck2==true){	
+				shoot2.playAsSoundEffect(1.0f, 1.0f, false);
+				shootCheck2=false;
+			}
 			proj2.CalcProj();
 			projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
 			fire2X=proj2.posX();
@@ -157,16 +213,29 @@ public class Map2 extends BasicGameState {
 			winner = "Player 1 wins!";
 			winx=675;
 			winy=300;
+			if(dogepossible && wowCheck){
+				try {
+			        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
+			        } catch (IOException e) {
+			        e.printStackTrace();
+			    }
+				wow.playAsSoundEffect(1.0f, 1.0f, false);
+				wowCheck=false;
+				}
 		}
 		else if(playerhit2>9){
 			winner = "Player 2 wins!";
 			winx=675;
 			winy=300;
 		}
-		
 
 		if(input.isKeyDown(Input.KEY_ESCAPE)){
-			System.exit(0);
+			music.stop();
+			musicCheck=true;
+			wowCheck=true;
+			playerhit1=0;
+			playerhit2=0;
+			sbg.enterState(Barnacle.opening1);
 		}
 		
 	}

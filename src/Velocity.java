@@ -1,10 +1,16 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import org.newdawn.slick.*;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
 
 public class Velocity {
 	int chickX;
 	int chickY;
 	int VelX;
 	int VelY;
+    private Audio jump;
 	public Velocity(int chickX2, int chickY2, int velX2,int velY2) 
 	{
 	 chickX=chickX2;
@@ -38,13 +44,22 @@ public class Velocity {
 			chickY=800;
 		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
-			if(VelY<5)
+			if(VelY<5){
 			VelY=20;
+			
+			try {
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/jump1.ogg"));
+		        } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+			jump.playAsSoundEffect(1.0f, 1.0f, false);
+			
+			}
 		}
 		VelY--;
 		if(VelY>20)
 		VelY=20;
-		if(VelY<-20)
+		if(VelY<-20 )
 			VelY=-20;
 		if(input.isKeyDown(Input.KEY_A)){
 		if(VelX>1)
@@ -93,8 +108,17 @@ public class Velocity {
 			chickX=1250;
 		}
 		if(input2.isKeyDown(Input.KEY_NUMPAD8)){
-			if(VelY<5)
+			if(VelY<5){
 			VelY=20;
+			
+			try {
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/jump2.ogg"));
+		        } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+			jump.playAsSoundEffect(1.0f, 1.0f, false);
+			
+			}
 		}
 		VelY--;
 		if(VelY>20)
