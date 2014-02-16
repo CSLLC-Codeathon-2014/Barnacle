@@ -37,6 +37,7 @@ public class Map1 extends BasicGameState {
 	long newTime = 0;
 	public String player1Score = "0";
 	public String player2Score = "0";
+	public String winner = "";
 	
 	
 	
@@ -49,7 +50,7 @@ public class Map1 extends BasicGameState {
 			throws SlickException {
 		land = new Image("bg.png");
 		chicken1= new Image("chickun1.png");
-		chicken2= new Image("chicken2.png");
+		chicken2= new Image("chickun2.png");
 		fire1= new Image("fure.png");
 		fire2= new Image("fure.png");
 		player1 = new Velocity(play1X, play1Y, Vel1X, Vel1Y);
@@ -61,11 +62,12 @@ public class Map1 extends BasicGameState {
 			throws SlickException {
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		chicken1.draw(play1X, play1Y, gc.getWidth()/9, gc.getHeight()/8);
-		chicken2.draw(play2X, play2Y, gc.getWidth()/9, gc.getHeight()/8);
+		chicken2.draw(play2X, play2Y, gc.getWidth()/18, gc.getHeight()/8);
 		fire1.draw(fire1X, fire1Y);
 		fire2.draw(fire2X, fire2Y);
-		g.drawString(player1Score, 400, 800);
-		g.drawString(player2Score, 800, 800);
+		g.drawString("" + playerhit1, 650, 800);
+		g.drawString("" + playerhit2, 900, 800);
+		g.drawString("" + winner, 700, 650);
 	}
 
 	@Override
@@ -74,7 +76,6 @@ public class Map1 extends BasicGameState {
 		Input input = gc.getInput();
 		projCircle1= new Circle(fire1X, fire1Y, 25);
 		projCircle2= new Circle(fire2X, fire2Y, 25);
-		//System.out.println(getTime());
 		
 		//
 		//PLAYER 1
@@ -88,7 +89,6 @@ public class Map1 extends BasicGameState {
 			projCircle1= new Circle(fire1X, fire1Y, 25);
 			proj1 = new Velocity(fire1X+80, fire1Y, 20, -5);
 		}
-		
 		if(bool1==true){
 		proj1.CalcProj();
 		projCircle1= new Circle(fire1X, fire1Y, 25);
@@ -108,42 +108,40 @@ public class Map1 extends BasicGameState {
 			fire2X=play2X;
 			fire2Y=play2Y;
 			projCircle2= new Circle(fire2X, fire2Y, 25);
-			proj2 = new Velocity(fire2X+80, fire2Y, -20, -5);
+			proj2 = new Velocity(fire2X+30, fire2Y, -15, -3);
 		}
 		
 		if(bool2==true){
-		proj2.CalcProj();
-		fire2X=proj2.posX();
-		fire2Y=proj2.posY();
+			proj2.CalcProj();
+			fire2X=proj2.posX();
+			fire2Y=proj2.posY();
 		}
 		//END OF PLAYER 2
 		//
+		
+		//player 1 collision detector
 		if(projCircle1.contains(play2X+50, play2Y+50) && CanBeHit2==true){
 			playerhit1++;
-			System.out.println("hit");
 			CanBeHit2=false;
 		}
 		if(!(projCircle1.contains(play2X+50, play2Y+50) && CanBeHit2==false)){
 			CanBeHit2=true;
-			System.out.println("player 1 score: " + playerhit1);
 		}
 		
-		//second collision detector
+		//player 2 collision detector
 		if(projCircle2.contains(play1X+50, play1Y+50) && CanBeHit1==true){
 				playerhit2++;
-				System.out.println("player 1 hit!");
 				CanBeHit1=false;
 		}
 		else if(!(projCircle1.contains(play1X+50, play1Y+50) && CanBeHit1==false)){
 				CanBeHit1=true;
-				System.out.println("player 2 score: " + playerhit2);
 		}
 		
 		if(playerhit1>9){
-			System.out.println("Player 1 wins!");
+			winner = "Player 1 wins!";
 		}
 		if(playerhit2>9){
-			System.out.println("Player 2 wins!");
+			winner = "Player 2 wins!";
 		}
 	}
 
