@@ -42,6 +42,7 @@ public class Velocity {
 		}
 		if(chickY>800){
 			chickY=800;
+			VelY=0;
 		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			if(VelY<5){
@@ -59,8 +60,11 @@ public class Velocity {
 		VelY--;
 		if(VelY>20)
 		VelY=20;
-		if(VelY<-20 )
-			VelY=-20;
+		if(VelY<-20)
+			VelY-=2;
+		if(VelY<-40)
+			VelY=-40;
+			
 		if(input.isKeyDown(Input.KEY_A)){
 		if(VelX>1)
 			VelX=1;
@@ -103,12 +107,13 @@ public class Velocity {
 		}
 		if(chickY>800){
 			chickY=800;
+			VelY=0;
 		}
 		if(chickY>610 && chickX>600 && chickX<1250){
 			chickX=1250;
 		}
 		if(input2.isKeyDown(Input.KEY_NUMPAD8)){
-			if(VelY<5){
+			if(VelY<5 && VelY>-25){
 			VelY=20;
 			
 			try {
@@ -124,7 +129,9 @@ public class Velocity {
 		if(VelY>20)
 		VelY=20;
 		if(VelY<-20)
-			VelY=-20;
+			VelY-=2;
+		if(VelY<-40)
+			VelY=-40;
 		if(input2.isKeyDown(Input.KEY_NUMPAD4)){
 		if(VelX>1)
 			VelX=1;
