@@ -339,6 +339,10 @@ public class Map extends BasicGameState {
 		
 		if(input.isKeyDown(Input.KEY_ESCAPE)){
 			music.stop();
+			player1.posX=gc.getWidth()/7*2;
+			player1.posY=gc.getHeight()/18*7;
+			player2.posX=gc.getWidth()/16*9;;
+			player2.posY=gc.getHeight()/18*7;
 			musicCheck=true;
 			playerhit1=0;
 			playerhit2=0;

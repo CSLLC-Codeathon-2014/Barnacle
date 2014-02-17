@@ -337,6 +337,10 @@ public class AiMap extends BasicGameState {
 		
 		if(input.isKeyDown(Input.KEY_ESCAPE)){
 			music.stop();
+			player1.posX=gc.getWidth()/7*2;
+			player1.posY=gc.getHeight()/18*7;
+			aiPlayer.posX=gc.getWidth()/16*9;;
+			aiPlayer.posY=gc.getHeight()/18*7;
 			musicCheck=true;
 			playerhit1=0;
 			playerhit2=0;
