@@ -32,8 +32,6 @@ public class Opening1 extends BasicGameState{
 	    exitGame = new Image("exitGame.png");
 	    menu = new Image("menu.png");
 	    title = new Image("title.png");
-//		Font awtFont = new Font("Old English Text MT", Font.BOLD, 36);
-//		font = new TrueTypeFont(awtFont, true);
 		wowtime=true;
 		
 		//set font
@@ -51,7 +49,7 @@ public class Opening1 extends BasicGameState{
 		//
 		//
 		//
-		//audio related stuff:
+		//sets sound for both doge and cage, but cage has no sound yet so set to wow
 		 try {
 		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
 		     } catch (IOException e){
@@ -67,18 +65,21 @@ public class Opening1 extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.setFont(font); 
+		g.setFont(font);
 		g.setColor(Color.red);
 		menu.draw(0,0,gc.getWidth(), gc.getHeight());
 		g.drawString("Toxic", gc.getWidth()/34, gc.getHeight()/11);
 		g.drawString("     Wasteland", gc.getWidth()/34, gc.getHeight()/11+50);
+		g.drawString("Ai Level", gc.getWidth()/34, gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Paradise", gc.getWidth()/4, gc.getHeight()/8);
+		g.drawString("Ai Level", gc.getWidth()/4, gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Lava Pit", gc.getWidth()/2-65, gc.getHeight()/8);
-		g.drawString("Ice Cavern", gc.getWidth()-565, gc.getHeight()/8);
-		g.drawString("Training Mode", 1340, gc.getHeight()/8);
-		
-	    exitGame.draw(gc.getWidth()-300, gc.getHeight()-100);
-	    title.draw(gc.getWidth()/6, gc.getHeight()/4);
+		g.drawString("AI Level", gc.getWidth()/2-65, gc.getHeight()-(gc.getHeight()/8));
+		g.drawString("Ice Cavern", gc.getWidth()-(gc.getWidth()/28*10), gc.getHeight()/8);
+		g.drawString("AI Level", gc.getWidth()-(gc.getWidth()/28*10), gc.getHeight()-(gc.getHeight()/8));
+		g.drawString("Training Mode", gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()/8);
+	    exitGame.draw(gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()-(gc.getHeight()/8));
+	    title.draw(gc.getWidth()/6, gc.getHeight()/4, gc.getWidth()/3*2, gc.getHeight()/4);
 	}
 
 	@Override
@@ -87,7 +88,8 @@ public class Opening1 extends BasicGameState{
 		 int posX = Mouse.getX();
 	     int posY = Mouse.getY();
 	     
-	     if((posX>(gc.getWidth()-300) && posX<(gc.getWidth()-100) && (posY>(50) && posY<(100))))
+	     //Escape button below
+	     if((posX>(gc.getWidth()-350) && posX<(gc.getWidth()-80) && (posY>(40) && posY<(110))))
 	     {
 	         if(Mouse.isButtonDown(0)){
 	        	 System.exit(0);
@@ -96,59 +98,100 @@ public class Opening1 extends BasicGameState{
 	     
 	     //
 	     //starting the game
-	     if((posX<((gc.getWidth()/5)*1)))
+	     //This first section is for AI singleplayer.
+	     if((posX<((gc.getWidth()/5)*1))  && posY<gc.getHeight()/3)
 	     {
 	         if(Mouse.isButtonDown(0)){
-	            sbg.enterState(Barnacle.map1);
+	        	 AiMap.mapControl=0;
+	        	 AiMap.mapinit();
+	            sbg.enterState(Barnacle.mapAI);
 	         }
 	     }
-	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
+	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2))  && posY<gc.getHeight()/3)
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
-	    	            sbg.enterState(Barnacle.map2);
+	    	        	AiMap.mapControl=1;
+	    	        	AiMap.mapinit();
+	    	            sbg.enterState(Barnacle.mapAI);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
+	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)) && posY<gc.getHeight()/3)
+	     {
+	         if(Mouse.isButtonDown(0)){ 
+	        	 AiMap.mapControl=2;
+	        	 AiMap.mapinit();
+	            sbg.enterState(Barnacle.mapAI);
+	         }
+	     }
+	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4))  && posY<gc.getHeight()/3)
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
-	    	            sbg.enterState(Barnacle.map3);
+	    	        	 AiMap.mapControl=3;
+	    	        	 AiMap.mapinit();
+	    	            sbg.enterState(Barnacle.mapAI);	    	        
+	    	            }
+	    	     }
+	     //Haven't found a good spot for this, so I'm leaving it empty.
+//	     if((posX>((gc.getWidth()/5)*4))  && posY<500)
+//	    	     {
+//	    	         if(Mouse.isButtonDown(0)){
+//	    	        	 AiMap.mapControl=4;
+//	    	        	 AiMap.mapinit();
+//	    	            sbg.enterState(Barnacle.mapAI);
+//	    	         }
+//	    	     }
+	     
+	     //
+	     //Set up for the Multiplayer maps
+	     if((posX<((gc.getWidth()/5)*1))  && posY>gc.getHeight()/3)
+	     {
+	         if(Mouse.isButtonDown(0)){
+	        	 Map.mapControl=0;
+	        	 Map.mapinit();
+	            sbg.enterState(Barnacle.map);
+	         }
+	     }
+	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2))  && posY>gc.getHeight()/3)
+	    	     {
+	    	         if(Mouse.isButtonDown(0)){
+	    	        	Map.mapControl=1;
+	   	        	 Map.mapinit();
+	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
+	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)) && posY>gc.getHeight()/3)
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
-	    	            sbg.enterState(Barnacle.map4);
+	    	        	 Map.mapControl=2;
+	    	        	 Map.mapinit();
+	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*4)))
+	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4))  && posY>gc.getHeight()/3)
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
-	    	            sbg.enterState(Barnacle.map5);
+	    	        	 Map.mapControl=3;
+	    	        	 Map.mapinit();
+	    	            sbg.enterState(Barnacle.map);
+	    	         }
+	    	     }
+	     if((posX>((gc.getWidth()/5)*4))  && posY>300)
+	    	     {
+	    	         if(Mouse.isButtonDown(0)){
+	    	        	 Map.mapControl=4;
+	    	        	 Map.mapinit();
+	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
 	     
-	     if((posX>((gc.getWidth()/2)-100) && posX<((gc.getWidth()/2)+100)) && (posY>((gc.getHeight()/4)-25) && posY<((gc.getHeight()/4)+25)))
-	     {
-	         if(Mouse.isButtonDown(0)){
-	            sbg.enterState(Barnacle.map2);
-	         }
-	     }
-	     //exitting the program
-	     //
-	     //
 	     
 	        Input input = gc.getInput();
+	        //sets if player 1 is Doge
 			if(input.isKeyDown(Input.KEY_D)){
-				Map1.dogepossible=true;
-				Map1.secondinit();
-				Map2.dogepossible=true;
-				Map2.secondinit();
-				Map3.dogepossible=true;
-				Map3.secondinit();
-				Map4.dogepossible=true;
-				Map4.secondinit();
-				Map5.dogepossible=true;
-				Map5.secondinit();
+				Map.dogepossible=true;
+				AiMap.dogepossible=true;
+				Map.secondinit();
+				AiMap.secondinit();
 				if(wowtime==true){
 				wowEffect.playAsSoundEffect(1.0f, 1.0f, false);
 				wowtime=false;
@@ -156,18 +199,12 @@ public class Opening1 extends BasicGameState{
 				else{}
 			}
 			
-			//sets Cage
+			//sets if player 2 is Cage
 			if(input.isKeyDown(Input.KEY_NUMPAD9)){
-				Map1.cagepossible=true;
-				Map1.secondinit();
-				Map2.cagepossible=true;
-				Map2.secondinit();
-				Map3.cagepossible=true;
-				Map3.secondinit();
-				Map4.cagepossible=true;
-				Map4.secondinit();
-				Map5.cagepossible=true;
-				Map5.secondinit();
+				Map.cagepossible=true;
+				AiMap.cagepossible=true;
+				Map.secondinit();
+				AiMap.secondinit();
 				if(cagetime==true){
 				cageEffect.playAsSoundEffect(1.0f, 1.0f, false);
 				cagetime=false;
@@ -175,6 +212,7 @@ public class Opening1 extends BasicGameState{
 				else{}
 			}
 			
+			//Escape does nothing right now, just here if I decide it has a use.
 			if(input.isKeyDown(Input.KEY_ESCAPE)){
 				sbg.enterState(Barnacle.opening1);
 			}

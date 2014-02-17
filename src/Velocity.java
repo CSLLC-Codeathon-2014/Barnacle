@@ -6,46 +6,56 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 
 public class Velocity {
-	int chickX;
-	int chickY;
+	int posX;
+	int posY;
 	int VelX;
 	int VelY;
     private Audio jump;
-	public Velocity(int chickX2, int chickY2, int velX2,int velY2) 
+	public Velocity(int posX2, int posY2, int velX2,int velY2) 
 	{
-	 chickX=chickX2;
-	 chickY=chickY2;
+	 posX=posX2;
+	 posY=posY2;
 	 VelX=velX2;
 	 VelY=velY2;
 	}
 	
 	public void CalcPosPlay1(GameContainer gc){
 		Input input = gc.getInput();
-		if(chickY>=520 && chickY<635 && chickX>250 && chickX<1250){
-			chickY=520;
+		//colliding with walls and floors
+		//top of rock
+		if(posY>=(gc.getHeight()/36*21) && posY<(gc.getHeight()/18*12) && posX>(gc.getWidth()/7) && posX<(gc.getWidth()/16*12)){
+			posY=(gc.getHeight()/36*21);
 			VelY=0;
 		}
-		if(chickY>600 && chickX<250 && chickX>200){
-			chickX=200;
+		//left side of rock
+		if(posY>(gc.getHeight()/36*21) && posX<(gc.getWidth()/7) && posX>(gc.getWidth()/8)){
+			posX=(gc.getWidth()/8);
 		}
-		if(chickY>600 && chickX>1200 && chickX<1250){
-			chickX=1250;
+		//right side of rock
+		if(posY>(gc.getHeight()/36*21) && posX>(gc.getWidth()/16*11) && posX<(gc.getWidth()/16*12)){
+			posX=(gc.getWidth()/16*12);
 		}
-		if(chickX>1500){
-			chickX=1500;
+		//right wall
+		if(posX>gc.getWidth()-(gc.getWidth()/8)){
+			posX=(gc.getWidth()-(gc.getWidth()/8));
 		}
-		if(chickX<-50){
-			chickX=-50;
+		//left wall
+		if(posX<-50){
+			posX=-50;
 		}
-		if(chickY<-50){
-			chickY=-50;
+		//ground
+				if(posY>(gc.getHeight()-50)){
+					posY=(gc.getHeight()-50);
+					VelY=0;
+				}
+		//cieling
+		if(posY<-20){
+			posY=-20;
 		}
-		if(chickY>800){
-			chickY=800;
-			VelY=0;
-		}
+		
+		//jumping
 		if(input.isKeyDown(Input.KEY_SPACE)){
-			if(VelY<5){
+			if(VelY<5 && VelY>-25){
 			VelY=20;
 			
 			try {
@@ -84,34 +94,44 @@ public class Velocity {
 		if(VelX<0)
 		VelX++;
 		
-		chickY=chickY-VelY;
-		chickX=chickX+VelX;
+		posY=posY-VelY;
+		posX=posX+VelX;
 	}
 	public void CalcPosPlay2(GameContainer gc){
 		Input input2 = gc.getInput();
-		if(chickY>=520 && chickY<635 && chickX>350 && chickX<1250){
-			chickY=520;
+		//colliding with walls and floors
+		//top of rock
+		if(posY>=(gc.getHeight()/36*21) && posY<(gc.getHeight()/18*12) && posX>(gc.getWidth()/7) && posX<(gc.getWidth()/16*12)){
+			posY=(gc.getHeight()/36*21);
 			VelY=0;
 		}
-		if(chickY>610 && chickX<600 && chickX>200){
-			chickX=200;
+		//left side of rock
+		if(posY>(gc.getHeight()/36*21) && posX<(gc.getWidth()/7) && posX>(gc.getWidth()/8)){
+			posX=(gc.getWidth()/8);
 		}
-		if(chickX>1500){
-			chickX=1500;
+		//right side of rock
+		if(posY>(gc.getHeight()/36*21) && posX>(gc.getWidth()/16*11) && posX<(gc.getWidth()/16*12)){
+			posX=(gc.getWidth()/16*12);
 		}
-		if(chickX<-50){
-			chickX=-50;
+		//right wall
+		if(posX>gc.getWidth()-(gc.getWidth()/16)){
+			posX=(gc.getWidth()-(gc.getWidth()/16));
 		}
-		if(chickY<-50){
-			chickY=-50;
+		//left wall
+		if(posX<0){
+			posX=0;
 		}
-		if(chickY>800){
-			chickY=800;
+		//ground
+		if(posY>(gc.getHeight()-50)){
+			posY=(gc.getHeight()-50);
 			VelY=0;
 		}
-		if(chickY>610 && chickX>600 && chickX<1250){
-			chickX=1250;
+		//cieling
+		if(posY<-20){
+			posY=-20;
 		}
+		//end of the boundaries
+		
 		if(input2.isKeyDown(Input.KEY_NUMPAD8)){
 			if(VelY<5 && VelY>-25){
 			VelY=20;
@@ -129,8 +149,8 @@ public class Velocity {
 		if(VelY>20)
 		VelY=20;
 		if(VelY<-20)
-			VelY-=2;
-		if(VelY<-40)
+			VelY+=2;
+		if(VelY<-30)
 			VelY=-40;
 		if(input2.isKeyDown(Input.KEY_NUMPAD4)){
 		if(VelX>1)
@@ -151,29 +171,20 @@ public class Velocity {
 		if(VelX<0)
 		VelX++;
 		
-		chickY=chickY-VelY;
-		chickX=chickX+VelX;
+		posY=posY-VelY;
+		posX=posX+VelX;
 	}
 	
 	public void CalcProj(){
-		if(chickY>=599 && chickY<635 && chickX>350 && chickX<1250){
-			chickY=999;
-		}
-		if(chickY>610 && chickX<600 && chickX>200){
-			chickX=300;
-		}
-		if(chickY>610 && chickX>600 && chickX<1250){
-			chickX=1250;
-		}
-		chickY=chickY-VelY;
-		chickX=chickX+VelX;
+		posY=posY-VelY;
+		posX=posX+VelX;
 	}
 	
 	public int posX(){
-		return chickX;
+		return posX;
 	}
 	
 	public int posY(){
-		return chickY;
+		return posY;
 	}
 }
