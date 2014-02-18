@@ -1,6 +1,6 @@
 import org.newdawn.slick.Image;
 
-public class Chicken
+public class Player
 {
     private Image sprite;
     private int x;
@@ -10,7 +10,7 @@ public class Chicken
     private int score;
     private boolean canBeHit;
     
-    public Chicken(){
+    public Player(){
         sprite=new Image("chickun1.png");
         x=0;
         y=0;
@@ -19,11 +19,11 @@ public class Chicken
         score=0;
         canBeHit=false;
     }
-    public Chicken(String filename){
+    public Player(String filename){
         this();
         sprite=new Image(filename);
     }
-    public Chicken(String filename, int initX, int initY){
+    public Player(String filename, int initX, int initY){
         this(filename);
         x=initX;
         y=initY;
