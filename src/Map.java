@@ -9,8 +9,7 @@ import java.io.InputStream;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 
-
-public class Map extends BasicGameState {
+public class Map extends BasicGameState{
 	private int state;
 	static Image land;
 	static Image chicken1;
@@ -53,8 +52,6 @@ public class Map extends BasicGameState {
 	int playerhit2=0;
 	boolean CanBeHit1 =true;
 	boolean CanBeHit2 =true;
-	public String player1Score = "0";
-	public String player2Score = "0";
 	public String winner = "";
 	TrueTypeFont font;
 	static boolean dogepossible;
@@ -149,9 +146,6 @@ public class Map extends BasicGameState {
 		land = new Image("bg.png");	
 	}
 	
-	
-	
-	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -170,9 +164,16 @@ public class Map extends BasicGameState {
 		hit1.draw(hitx1,hity1);
 		hit2.draw(hitx2,hity2);
 		hud.draw(0,0,gc.getWidth(), gc.getHeight());
-		g.drawString("" + playerhit1, gc.getWidth()/2-(gc.getWidth()/9), gc.getHeight()-(gc.getHeight()/90*12));
-		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), gc.getHeight()-(gc.getHeight()/90*12));
+		g.drawString("" + playerhit1, gc.getWidth()/2-(gc.getWidth()/9), (int) (gc.getHeight()-((gc.getHeight()/90)*11.5)));
+		System.out.println("Y Pos is: " + (gc.getHeight()-(gc.getHeight()/900*113)));
+		System.out.println("height is: " + gc.getHeight());
+		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), (int) (gc.getHeight()-(gc.getHeight()/90*11.5)));
 		g.drawString("You both tied!", tiex, tiey);
+		if(playerhit2>9 || playerhit1>9)
+		displayWon();
+	}
+	
+	public void displayWon(){
 		win1.draw(win1x, win1y);
 		win2.draw(win2x,win2y);
 		wnner.draw(winx, winy);

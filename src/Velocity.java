@@ -71,7 +71,7 @@ public class Velocity {
 		if(VelY>20)
 		VelY=20;
 		if(VelY<-20)
-			VelY-=2;
+			VelY+=2;
 		if(VelY<-40)
 			VelY=-40;
 			
