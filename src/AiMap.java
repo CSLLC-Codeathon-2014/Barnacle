@@ -73,7 +73,7 @@ public class AiMap extends BasicGameState {
 	int hity2=2000;
 	int tiex =2000;
 	int tiey =2000;
-	static int mapControl=0;
+	static int mapControl;
 	
 	public AiMap(int state) {
 		 this.state = state;
@@ -131,6 +131,7 @@ public class AiMap extends BasicGameState {
 	}
 	
 	public static void mapinit() throws SlickException{
+		System.out.println(mapControl);
 		if(mapControl==0)
 			land = new Image("ToxicWasteland.png");
 		if(mapControl==1)
@@ -369,7 +370,8 @@ public class AiMap extends BasicGameState {
 			fire2Y = 2000;
 			bool1=false;
 			bool2=false;
-			sbg.enterState(Barnacle.opening1);
+			StartMenu.theme.playAsSoundEffect(1.0f, 1.0f, false);
+			sbg.enterState(Barnacle.startMenu);
 		}
 	}
 

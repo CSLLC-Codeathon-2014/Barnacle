@@ -13,25 +13,26 @@ import org.newdawn.slick.openal.AudioLoader;
 public class Opening1 extends BasicGameState{
 
 	private int state;
-	Image exitGame;
-	Image title;
 	Image menu;
 	TrueTypeFont font;
     private Audio wowEffect;
     private boolean wowtime;
     private Audio cageEffect;
     private boolean cagetime;
+    static boolean IsThereAI = true;
 
 	public Opening1(int state) {
 		 this.state = state;
+	}
+	
+	public static void isThereAI(boolean wellIsThere){
+		IsThereAI = wellIsThere;
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-	    exitGame = new Image("exitGame.png");
 	    menu = new Image("menu.png");
-	    title = new Image("title.png");
 		wowtime=true;
 		
 		//set font
@@ -70,21 +71,20 @@ public class Opening1 extends BasicGameState{
 		menu.draw(0,0,gc.getWidth(), gc.getHeight());
 		g.drawString("Toxic", gc.getWidth()/34, gc.getHeight()/11);
 		g.drawString("     Wasteland", gc.getWidth()/34, gc.getHeight()/11+50);
-		g.drawString("Ai Level", gc.getWidth()/34, gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Paradise", gc.getWidth()/4, gc.getHeight()/8);
-		g.drawString("Ai Level", gc.getWidth()/4, gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Lava Pit", gc.getWidth()/2-65, gc.getHeight()/8);
-		g.drawString("AI Level", gc.getWidth()/2-65, gc.getHeight()-(gc.getHeight()/8));
+		if(IsThereAI)
+			g.drawString("Singleplayer", gc.getWidth()/2-65, gc.getHeight()-(gc.getHeight()/8));
+		else
+			g.drawString("Multiplayer", gc.getWidth()/2-65, gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Ice Cavern", gc.getWidth()-(gc.getWidth()/28*10), gc.getHeight()/8);
-		g.drawString("AI Level", gc.getWidth()-(gc.getWidth()/28*10), gc.getHeight()-(gc.getHeight()/8));
 		g.drawString("Training Mode", gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()/8);
-	    exitGame.draw(gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()-(gc.getHeight()/8));
-	    title.draw(gc.getWidth()/6, gc.getHeight()/4, gc.getWidth()/3*2, gc.getHeight()/4);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		 Input input = gc.getInput();
 		 int posX = Mouse.getX();
 	     int posY = Mouse.getY();
 	     
@@ -99,93 +99,114 @@ public class Opening1 extends BasicGameState{
 	     //
 	     //starting the game
 	     //This first section is for AI singleplayer.
-	     if((posX<((gc.getWidth()/5)*1))  && posY<gc.getHeight()/3)
+	     //if(IsThereAI){
+	     if((posX<((gc.getWidth()/5)*1)))
 	     {
-	         if(Mouse.isButtonDown(0)){
+	    	 if (input.isMousePressed(0)){
 	        	 AiMap.mapControl=0;
 	        	 AiMap.mapinit();
+	        	 StartMenu.theme.stop();
 	            sbg.enterState(Barnacle.mapAI);
 	         }
 	     }
-	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2))  && posY<gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
 	    	     {
-	    	         if(Mouse.isButtonDown(0)){
+	    	 if (input.isMousePressed(0)){
 	    	        	AiMap.mapControl=1;
 	    	        	AiMap.mapinit();
+	   	        	 	StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.mapAI);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)) && posY<gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
 	     {
-	         if(Mouse.isButtonDown(0)){ 
+	    	 if (input.isMousePressed(0)){ 
 	        	 AiMap.mapControl=2;
 	        	 AiMap.mapinit();
+	        	 StartMenu.theme.stop();
 	            sbg.enterState(Barnacle.mapAI);
 	         }
 	     }
-	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4))  && posY<gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
 	    	     {
-	    	         if(Mouse.isButtonDown(0)){
+	    	 if (input.isMousePressed(0)){
+	    	     		System.out.println("Before the change it is: " + AiMap.mapControl);
 	    	        	 AiMap.mapControl=3;
+		    	     	System.out.println("After the change it is: " + AiMap.mapControl);
 	    	        	 AiMap.mapinit();
+		   	        	 StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.mapAI);	    	        
 	    	            }
 	    	     }
-	     //Haven't found a good spot for this, so I'm leaving it empty.
-//	     if((posX>((gc.getWidth()/5)*4))  && posY<500)
-//	    	     {
-//	    	         if(Mouse.isButtonDown(0)){
-//	    	        	 AiMap.mapControl=4;
-//	    	        	 AiMap.mapinit();
-//	    	            sbg.enterState(Barnacle.mapAI);
-//	    	         }
-//	    	     }
+	   
+	     if((posX>((gc.getWidth()/5)*4)))
+	    	     {
+	    	         if(Mouse.isButtonDown(0)){
+	    	        	 AiMap.mapControl=4;
+	    	        	 AiMap.mapinit();
+		   	        	 StartMenu.theme.stop();
+	    	            sbg.enterState(Barnacle.mapAI);
+	    	         }
+	    	     }
+	     //}
 	     
 	     //
 	     //Set up for the Multiplayer maps
-	     if((posX<((gc.getWidth()/5)*1))  && posY>gc.getHeight()/3)
+	     //else{
+	     /*
+	     if((posX<((gc.getWidth()/5)*1)))
 	     {
 	         if(Mouse.isButtonDown(0)){
 	        	 Map.mapControl=0;
 	        	 Map.mapinit();
+	        	 StartMenu.theme.stop();
 	            sbg.enterState(Barnacle.map);
 	         }
 	     }
-	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2))  && posY>gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
 	    	        	Map.mapControl=1;
-	   	        	 Map.mapinit();
+	   	        	 	Map.mapinit();
+	   	        	 	StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)) && posY>gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
 	    	        	 Map.mapControl=2;
 	    	        	 Map.mapinit();
+		   	        	 StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4))  && posY>gc.getHeight()/3)
+	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
 	    	        	 Map.mapControl=3;
 	    	        	 Map.mapinit();
+		   	        	 StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
-	     if((posX>((gc.getWidth()/5)*4))  && posY>300)
+	     if((posX>((gc.getWidth()/5)*4)))
 	    	     {
 	    	         if(Mouse.isButtonDown(0)){
 	    	        	 Map.mapControl=4;
 	    	        	 Map.mapinit();
+		   	        	 StartMenu.theme.stop();
 	    	            sbg.enterState(Barnacle.map);
 	    	         }
 	    	     }
+	     //}
+	      * 
+	      * 
+	      * 
+	      * */
 	     
 	     
-	        Input input = gc.getInput();
+	        
 	        //sets if player 1 is Doge
 			if(input.isKeyDown(Input.KEY_D)){
 				Map.dogepossible=true;
@@ -214,7 +235,7 @@ public class Opening1 extends BasicGameState{
 			
 			//Escape does nothing right now, just here if I decide it has a use.
 			if(input.isKeyDown(Input.KEY_ESCAPE)){
-				sbg.enterState(Barnacle.opening1);
+				sbg.enterState(Barnacle.startMenu);
 			}
 	}
 	

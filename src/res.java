@@ -50,21 +50,21 @@ public class res extends BasicGameState{
 	     {
 	         if(Mouse.isButtonDown(0)){
 	        	 Barnacle.appgc.setDisplayMode(1280, 720, false);
-	        	 sbg.enterState(Barnacle.opening1);
+	        	 sbg.enterState(Barnacle.startMenu);
 	         }
 	      }
 	     else if((posY<gc.getHeight()/3*2))
 	     {
 	         if(Mouse.isButtonDown(0)){
 	        	 Barnacle.appgc.setDisplayMode(1280, 720, true);
-	        	 sbg.enterState(Barnacle.opening1);
+	        	 sbg.enterState(Barnacle.startMenu);
 	         }
 	      }
 	     else if((posY>gc.getHeight()/3*2))
 	     {
 	         if(Mouse.isButtonDown(0)){
 	        	 Barnacle.appgc.setDisplayMode(1600, 900, true);
-	        	 sbg.enterState(Barnacle.opening1);
+	        	 sbg.enterState(Barnacle.startMenu);
 	         }
 	      }
 	     
