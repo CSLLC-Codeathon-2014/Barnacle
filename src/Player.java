@@ -1,4 +1,5 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Player
 {
@@ -10,7 +11,7 @@ public class Player
     private int score;
     private boolean canBeHit;
     
-    public Player(){
+    public Player() throws SlickException{
         sprite=new Image("chickun1.png");
         x=0;
         y=0;
@@ -19,11 +20,11 @@ public class Player
         score=0;
         canBeHit=false;
     }
-    public Player(String filename){
+    public Player(String filename) throws SlickException{
         this();
         sprite=new Image(filename);
     }
-    public Player(String filename, int initX, int initY){
+    public Player(String filename, int initX, int initY) throws SlickException{
         this(filename);
         x=initX;
         y=initY;
@@ -53,10 +54,10 @@ public class Player
     }
 
     // Setters
-    public void setSprite(Image newSprite){
-        sprite=new Image(newSprite);
+    public void setSprite(Image newSprite) throws SlickException{
+        sprite= newSprite;
     }
-    public void setSprite(String filename){
+    public void setSprite(String filename) throws SlickException{
         sprite=new Image(filename);
     }
 

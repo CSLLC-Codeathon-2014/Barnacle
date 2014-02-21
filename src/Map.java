@@ -3,6 +3,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.geom.*;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,24 +24,24 @@ public class Map extends BasicGameState {
 	Image wnner;
 	Image win1;
 	Image win2;
-	int win1x=2000;
-	int win1y=2000;
-	int win2x=2000;
-	int win2y=2000;
-	int winx=2000;
-	int winy=2000;
-	int play1X;
-	int play1Y;
-	int Vel1X=0;
-	int Vel1Y=0;
-	int play2X;
-	int play2Y;
-	int Vel2X=0;
-	int Vel2Y=0;
-	int fire1X = 2000;
-	int fire1Y = 2000;
-	int fire2X = 2000;
-	int fire2Y = 2000;
+	static int win1x=2000;
+	static int win1y=2000;
+	static int win2x=2000;
+	static int win2y=2000;
+	static int winx=2000;
+	static int winy=2000;
+	static int play1X;
+	static int play1Y;
+	static int Vel1X=0;
+	static int Vel1Y=0;
+	static int play2X;
+	static int play2Y;
+	static int Vel2X=0;
+	static int Vel2Y=0;
+	static int fire1X = 2000;
+	static int fire1Y = 2000;
+	static int fire2X = 2000;
+	static int fire2Y = 2000;
 	Boolean bool1=false;
 	Boolean bool2=false;
 	Velocity player1;
@@ -49,10 +50,10 @@ public class Map extends BasicGameState {
 	Velocity proj2;
 	Circle projCircle1 = null;
 	Circle projCircle2 = null;
-	int playerhit1=0;
-	int playerhit2=0;
+	static int playerhit1=0;
+	static int playerhit2=0;
 	boolean CanBeHit1 =true;
-	boolean CanBeHit2 =true;
+	static boolean CanBeHit2 =true;
 	public String player1Score = "0";
 	public String player2Score = "0";
 	public String winner = "";
@@ -66,14 +67,14 @@ public class Map extends BasicGameState {
 	static boolean shootCheck=true;
     private Audio shoot2;
 	static boolean shootCheck2=true;
-    private Audio hit;
+    static Audio hit;
 	static boolean hitCheck=true;
-	int hitx1=2000;
-	int hitx2=2000;
-	int hity1=2000;
-	int hity2=2000;
-	int tiex =2000;
-	int tiey =2000;
+	static int hitx1=2000;
+	static int hitx2=2000;
+	static int hity1=2000;
+	static int hity2=2000;
+	static int tiex =2000;
+	static int tiey =2000;
 	static int mapControl=0;
 	
 	public Map(int state) {
@@ -281,6 +282,7 @@ public class Map extends BasicGameState {
 			CanBeHit2=true;
 		}
 		
+		
 		//player 2 collision detector
 		if(projCircle2.contains(play1X+90, play1Y+10) && CanBeHit1==true){
 			playerhit2++;
@@ -373,7 +375,8 @@ public class Map extends BasicGameState {
 			fire2Y = 2000;
 			bool1=false;
 			bool2=false;
-			sbg.enterState(Barnacle.opening1);
+			StartMenu.theme.playAsSoundEffect(1.0f, 1.0f, false);
+			sbg.enterState(Barnacle.startMenu);
 		}
 	}
 
