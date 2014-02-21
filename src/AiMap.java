@@ -82,17 +82,17 @@ public class AiMap extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		land = new Image("LavaPit.png");
-		chicken1= new Image("chickun1.png");
-	    chicken2= new Image("chickun2.png");
-		fire1= new Image("fure.png");
-		fire2= new Image("fure.png");
-		hit1= new Image("boom.png");
-		hit2= new Image("boom.png");
-		hud= new Image("hud.png");
-		wnner= new Image("wnner.png");
-		win1= new Image("1win.png");
-		win2= new Image("2win.png");
+		land = new Image("images/ToxicWasteland.png");
+		chicken1= new Image("images/chickun1.png");
+	    chicken2= new Image("images/chickun2.png");
+		fire1= new Image("images/fure.png");
+		fire2= new Image("images/fure.png");
+		hit1= new Image("images/boom.png");
+		hit2= new Image("images/boom.png");
+		hud= new Image("images/hud.png");
+		wnner= new Image("images/wnner.png");
+		win1= new Image("images/1win.png");
+		win2= new Image("images/2win.png");
 		player1 = new Velocity(play1X, play1Y, Vel1X, Vel1Y);
 		aiPlayer = new VelocityAI(play2X, play2Y, Vel2X, Vel2Y);
 		
@@ -108,41 +108,41 @@ public class AiMap extends BasicGameState {
 		}	
 		
 		try {
-	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("src/fire.ogg"));
+	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("src/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("src/fire.ogg"));
+	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("src/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        hit = AudioLoader.getAudio("OGG", new FileInputStream("src/hit.ogg"));
+	        hit = AudioLoader.getAudio("OGG", new FileInputStream("src/music/hit.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 	}
 	
 	public static void secondinit() 
 			throws SlickException{
 		if(dogepossible==true) 
-		    chicken1= new Image("doge.png");
+		    chicken1= new Image("images/doge.png");
 		else if (dogepossible==false)
-		    chicken1= new Image("chickun1.png");
+		    chicken1= new Image("images/chickun1.png");
 		if(cagepossible==true)
-		    chicken2= new Image("cage.png");
+		    chicken2= new Image("images/cage.png");
 		else if (cagepossible==false)
-		    chicken2= new Image("chickun2.png");
+		    chicken2= new Image("images/chickun2.png");
 	}
 	
+	//controls the maps
 	public static void mapinit() throws SlickException{
-		System.out.println(mapControl);
-		if(mapControl==0)
-			land = new Image("ToxicWasteland.png");
-		if(mapControl==1)
-			land = new Image("paradise.png");	
-		if(mapControl==2)
-			land = new Image("LavaPit.png");	
-		if(mapControl==3)
-			land = new Image("ice.png");	
-		if(mapControl==4)
-			land = new Image("bg.png");	
-		}
+	if(mapControl==0)
+		land = new Image("images/ToxicWasteland.png");
+	if(mapControl==1)
+		land = new Image("images/paradise.png");	
+	if(mapControl==2)
+		land = new Image("images/LavaPit.png");	
+	if(mapControl==3)
+		land = new Image("images/ice.png");	
+	if(mapControl==4)
+		land = new Image("image/bg.png");	
+	}
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -177,19 +177,19 @@ public class AiMap extends BasicGameState {
 			try {
 				
 				if(mapControl==0)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/magic.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/magic.ogg"));
 				else if(mapControl==1)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/icu.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/icu.ogg"));
 				else if(mapControl==2)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/castle.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/castle.ogg"));
 				else if(mapControl==3)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/attraction.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/attraction.ogg"));
 				else if(mapControl==4)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/hendl.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/hendl.ogg"));
 				else
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/castle.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/castle.ogg"));
 				if(dogepossible)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/wowsong.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wowsong.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }

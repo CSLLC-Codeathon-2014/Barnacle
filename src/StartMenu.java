@@ -27,7 +27,7 @@ public class StartMenu extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	    exitGame = new Image("images/exitGame.png");
-	    title = new Image("title.png");
+	    title = new Image("images/title.png");
 		
 		//set font
 		try {
@@ -42,7 +42,7 @@ public class StartMenu extends BasicGameState{
 		}
 		
 		try {
-	        theme = AudioLoader.getAudio("OGG", new FileInputStream("src/menu.ogg"));
+	        theme = AudioLoader.getAudio("OGG", new FileInputStream("src/music/menu.ogg"));
 	     } catch (IOException e){
 	        e.printStackTrace();
 	    }

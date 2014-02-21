@@ -32,7 +32,7 @@ public class Opening1 extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-	    menu = new Image("menu.png");
+	    menu = new Image("images/menu.png");
 		wowtime=true;
 		
 		//set font
@@ -52,12 +52,12 @@ public class Opening1 extends BasicGameState{
 		//
 		//sets sound for both doge and cage, but cage has no sound yet so set to wow
 		 try {
-		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
+		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
 		     } catch (IOException e){
 		        e.printStackTrace();
 		    }
 		try {
-			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
+			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
         } catch (IOException e) {
         	e.printStackTrace();
         }
