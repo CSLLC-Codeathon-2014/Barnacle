@@ -54,8 +54,6 @@ public class AiMap extends BasicGameState {
 	int playerhit2=0;
 	boolean CanBeHit1 =true;
 	boolean CanBeHit2 =true;
-	public String player1Score = "0";
-	public String aiPlayerScore = "0";
 	public String winner = "";
 	TrueTypeFont font;
 	static boolean dogepossible;
@@ -163,8 +161,8 @@ public class AiMap extends BasicGameState {
 		hit1.draw(hitx1,hity1);
 		hit2.draw(hitx2,hity2);
 		hud.draw(0,0,gc.getWidth(), gc.getHeight());
-		g.drawString("" + playerhit1, gc.getWidth()/2-(gc.getWidth()/9), gc.getHeight()-(gc.getHeight()/90*12));
-		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), gc.getHeight()-(gc.getHeight()/90*12));
+		g.drawString("" + playerhit1, gc.getWidth()/2-(gc.getWidth()/9), (int) (gc.getHeight()-((gc.getHeight()/90)*11.5)));
+		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), (int) (gc.getHeight()-((gc.getHeight()/90)*11.5)));
 		g.drawString("You both tied!", tiex, tiey);
 		win1.draw(win1x, win1y);
 		win2.draw(win2x,win2y);
