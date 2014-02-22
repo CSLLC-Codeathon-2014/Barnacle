@@ -1,54 +1,12 @@
-import java.awt.Font;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
-import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.state.*;
-import org.newdawn.slick.util.ResourceLoader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
-public class MenuControl {
+public class MenuControl extends MenuCommands{
 	
-	Image menu;
-	int state;
-	TrueTypeFont font;
-    Audio wowEffect;
-    boolean wowtime;
-    Audio cageEffect;
-    boolean cagetime;
-    boolean IsThereAI = true;
-	Image exitGame;
-	Image title;
-	static Audio theme;
-	boolean playTheme = true;
-	int Screen = 0;
-	 int posX = Mouse.getX();
-    int posY = Mouse.getY();
-    
-	public void initMain() throws SlickException{
-		exitGame = new Image("images/exitGame.png");
-	    title = new Image("images/title.png");
-		
-		//set font
-		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
-	 
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(84f); // set font size
-			font = new TrueTypeFont(awtFont, false);
-	 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try {
-	        theme = AudioLoader.getAudio("OGG", new FileInputStream("src/music/menu.ogg"));
-	     } catch (IOException e){
-	        e.printStackTrace();
-	    }	
-	}
+	static int posX = Mouse.getX();
+    static int posY = Mouse.getY();
 	
 	public void menuSelect(GameContainer gc, StateBasedGame sbg, Graphics g){
 		g.setFont(font);
@@ -62,7 +20,6 @@ public class MenuControl {
 	}
 	
 	public void menuUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		Input input = gc.getInput();
 		posX = Mouse.getX();
 	    posY = Mouse.getY();
 		if(playTheme ==true){
@@ -88,7 +45,6 @@ public class MenuControl {
 	         if(Mouse.isButtonDown(0)){
 	        	IsThereAI = true;
 	        	Screen=1;
-				Mouse.setGrabbed(false);
 	         }
 	     }
 	     else if((posX<(gc.getWidth()/2)  && posY<gc.getHeight()/2))
@@ -96,41 +52,13 @@ public class MenuControl {
 	         if(Mouse.isButtonDown(0)){
 		        	IsThereAI = false;
 		        	Screen=1;
-					Mouse.setGrabbed(false);
 	         }
 	     }
 			
 			//Escape does nothing right now, just here if I decide it has a use.
-			if(input.isKeyDown(Input.KEY_ESCAPE)){
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				Screen=0;
-				Mouse.setGrabbed(false);
 			}
-	}
-	
-	public void initLevel() throws SlickException{
-		menu = new Image("images/menu.png");
-		wowtime=true;
-		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
-	 
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(84f); // set font size
-			font = new TrueTypeFont(awtFont, false);
-	 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		 try {
-		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
-		     } catch (IOException e){
-		        e.printStackTrace();
-		    }
-		try {
-			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
 	}
 	
 	public void levelSelect(GameContainer gc, StateBasedGame sbg, Graphics g){
@@ -151,7 +79,7 @@ public class MenuControl {
 	}
 
 	public void levelUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		Input input = gc.getInput();
+		Mouse.setGrabbed(false);
 		posX = Mouse.getX();
 	    posY = Mouse.getY();
 	     
@@ -159,10 +87,11 @@ public class MenuControl {
 	    	 if((posX<((gc.getWidth()/5))))
 	    	 {
 	    		 if (Mouse.isButtonDown(0)){
+	    			 System.out.println("click");
 	    			 Map.mapControl=0;
 	    			 Map.mapinit();
-	    			 Map.IsThisAI=true;
 	    			 theme.stop();
+	    			 Map.IsThisAI=true;
 	    			 sbg.enterState(Barnacle.map);
 	    		 }
 	    	 }
@@ -192,9 +121,7 @@ public class MenuControl {
 	    	 if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
 	    	 {
 	    		 if (Mouse.isButtonDown(0)){
-	    			 System.out.println("Before the change it is: " + Map.mapControl);
 	    			 Map.mapControl=3;
-	    			 System.out.println("After the change it is: " + Map.mapControl);
 	    			 Map.mapinit();
 	    			 theme.stop();
 	    			 Map.IsThisAI=true;
@@ -217,61 +144,61 @@ public class MenuControl {
 	     //
 	     //Set up for the Multiplayer maps
 	     else{
-	     if((posX<((gc.getWidth()/5)*1)))
-	     {
-	         if(Mouse.isButtonDown(0)){
-	        	 Map.mapControl=0;
-	        	 Map.mapinit();
-	        	 theme.stop();
-	        	 Map.IsThisAI=false;
-	            sbg.enterState(Barnacle.map);
-	         }
-	     }
-	     if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
-	    	     {
-	    	         if(Mouse.isButtonDown(0)){
-	    	        	Map.mapControl=1;
-	   	        	 	Map.mapinit();
-	   	        	 	theme.stop();
-	   	        	 	Map.IsThisAI=false;
-	    	            sbg.enterState(Barnacle.map);
-	    	         }
-	    	     }
-	     if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
-	    	     {
-	    	         if(Mouse.isButtonDown(0)){
-	    	        	 Map.mapControl=2;
-	    	        	 Map.mapinit();
-		   	        	 theme.stop();
-			        	 Map.IsThisAI=false;
-	    	            sbg.enterState(Barnacle.map);
-	    	         }
-	    	     }
-	     if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
-	    	     {
-	    	         if(Mouse.isButtonDown(0)){
-	    	        	 Map.mapControl=3;
-	    	        	 Map.mapinit();
-		   	        	 theme.stop();
-			        	 Map.IsThisAI=false;
-	    	            sbg.enterState(Barnacle.map);
-	    	         }
-	    	     }
-	     if((posX>((gc.getWidth()/5)*4))){
-	    	         if(Mouse.isButtonDown(0)){
-	    	        	 Map.mapControl=4;
-	    	        	 Map.mapinit();
-		   	        	 theme.stop();
-			        	 Map.IsThisAI=false;
-	    	            sbg.enterState(Barnacle.map);
-	    	         }
-	    	     }
+	    	 if((posX<((gc.getWidth()/5)*1)))
+	    	 {
+	    		 if(Mouse.isButtonDown(0)){
+	    			 Map.mapControl=0;
+	    			 Map.mapinit();
+	    			 theme.stop();
+	    			 Map.IsThisAI=false;
+	    			 sbg.enterState(Barnacle.map);
+	    		 }
+	    	 }
+	    	 if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
+	    	 {
+	    		 if(Mouse.isButtonDown(0)){
+	    			 Map.mapControl=1;
+	    			 Map.mapinit();
+	    			 theme.stop();
+	    			 Map.IsThisAI=false;
+	    			 sbg.enterState(Barnacle.map);
+	    		 }
+	    	 }
+	    	 if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
+	    	 {
+	    		 if(Mouse.isButtonDown(0)){
+	    			 Map.mapControl=2;
+	    			 Map.mapinit();
+	    			 theme.stop();
+	    			 Map.IsThisAI=false;
+	    			 sbg.enterState(Barnacle.map);
+	    		 }
+	    	 }
+	    	 if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
+	    	 {
+	    		 if(Mouse.isButtonDown(0)){
+	    			 Map.mapControl=3;
+	    			 Map.mapinit();
+	    			 theme.stop();
+	    			 Map.IsThisAI=false;
+	    			 sbg.enterState(Barnacle.map);
+	    		 }
+	    	 }
+	    	 if((posX>((gc.getWidth()/5)*4))){
+	    		 if(Mouse.isButtonDown(0)){
+	    			 Map.mapControl=4;
+	    			 Map.mapinit();
+	    			 theme.stop();
+	    			 Map.IsThisAI=false;
+	    			 sbg.enterState(Barnacle.map);
+	    		 }
+	    	 }
 	     }
 	     
 	     
 	        
 	        //sets if player 1 is Doge
-			if(input.isKeyDown(Input.KEY_D)){
+			if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 				Map.dogepossible=true;
 				Map.dogepossible=true;
 				Map.secondinit();
@@ -283,7 +210,7 @@ public class MenuControl {
 			}
 			
 			//sets if player 2 is Cage
-			if(input.isKeyDown(Input.KEY_NUMPAD9)){
+			if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)){
 				Map.cagepossible=true;
 				Map.cagepossible=true;
 				Map.secondinit();
@@ -296,11 +223,11 @@ public class MenuControl {
 			}
 			
 			//Escape does nothing right now, just here if I decide it has a use.
-			if(input.isKeyDown(Input.KEY_ESCAPE)){
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				Screen = 0;
 			}
 	}
-
+	
 	public int getGameType(){
 		return Screen;
 	}

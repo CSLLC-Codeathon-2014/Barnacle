@@ -1,4 +1,3 @@
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -6,6 +5,8 @@ public class StartMenu extends BasicGameState{
 	
 	private int state;
     MenuControl MenuManager;
+    MenuClick Click;
+    InputGetter get = new InputGetter();
 	
 	public StartMenu(int state) {
 		 this.state = state;
@@ -17,6 +18,7 @@ public class StartMenu extends BasicGameState{
 		MenuManager = new MenuControl();
 		MenuManager.initLevel();
 		MenuManager.initMain();
+		Click = new MenuClick();
 }
 
 	@Override
@@ -26,6 +28,8 @@ public class StartMenu extends BasicGameState{
 			MenuManager.menuSelect(gc,sbg,g);
 		else if(MenuManager.getGameType()==1)
 			MenuManager.levelSelect(gc,sbg,g);
+		get.getKey();
+		get.getChar();
 	}
 
 	@Override
@@ -35,11 +39,13 @@ public class StartMenu extends BasicGameState{
 			MenuManager.menuUpdate(gc, sbg, delta);
 		else if(MenuManager.getGameType()==1)
 			MenuManager.levelUpdate(gc, sbg, delta);
-		InputGetter get = new InputGetter();
-		if(Keyboard.next()){
-		System.out.println("The last key (int) pressed was " + get.getKey());
-		System.out.println("The last key(char) pressed was " + get.getChar());
-		}
+	}
+
+	public void mousePressed(int button, int x, int y){
+		if(MenuManager.getGameType()==0)
+			Click.MainClick(button, x, y);
+		else if(MenuManager.getGameType()==1)
+			Click.LevelClick(button, x, y);
 	}
 	
 	@Override

@@ -371,7 +371,7 @@ public class Map extends BasicGameState {
 							win1y=gc.getHeight()/18*13;
 							if(dogepossible){
 								try {
-							        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
+							        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
 							        } catch (IOException e) {
 							        e.printStackTrace();
 							    }
