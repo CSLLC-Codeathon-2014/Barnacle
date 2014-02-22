@@ -34,7 +34,7 @@ public class MenuCommands {
 		//set font
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
-	 
+			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont = awtFont.deriveFont(84f); // set font size
 			font = new TrueTypeFont(awtFont, false);

@@ -3,7 +3,7 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-public class MenuControl extends MenuCommands{
+public class MenuControl extends MenuClick{
 	
 	static int posX = Mouse.getX();
     static int posY = Mouse.getY();
@@ -20,42 +20,13 @@ public class MenuControl extends MenuCommands{
 	}
 	
 	public void menuUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		posX = Mouse.getX();
-	    posY = Mouse.getY();
 		if(playTheme ==true){
 			theme.playAsSoundEffect(1.0f, 1.0f, false);
 			playTheme=false;
 			Mouse.setGrabbed(false);
 			}
 			else{}
-	     
-	     //Escape button below
-	     if((posX>(gc.getWidth()-350) && posX<(gc.getWidth()-80) && (posY>(40) && posY<(110))))
-	     {
-	         if(Mouse.isButtonDown(0)){
-	        	 System.exit(0);
-	         }
-	      }
-	     
-	     //
-	     //starting the game
-	     //This first section is for AI singleplayer.
-	     if((posX<(gc.getWidth()/4)  && posY<gc.getHeight()/2))
-	     {
-	         if(Mouse.isButtonDown(0)){
-	        	IsThereAI = true;
-	        	Screen=1;
-	         }
-	     }
-	     else if((posX<(gc.getWidth()/2)  && posY<gc.getHeight()/2))
-	     {
-	         if(Mouse.isButtonDown(0)){
-		        	IsThereAI = false;
-		        	Screen=1;
-	         }
-	     }
-			
-			//Escape does nothing right now, just here if I decide it has a use.
+		
 			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				Screen=0;
 			}
@@ -80,122 +51,6 @@ public class MenuControl extends MenuCommands{
 
 	public void levelUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
 		Mouse.setGrabbed(false);
-		posX = Mouse.getX();
-	    posY = Mouse.getY();
-	     
-	     if(IsThereAI){
-	    	 if((posX<((gc.getWidth()/5))))
-	    	 {
-	    		 if (Mouse.isButtonDown(0)){
-	    			 System.out.println("click");
-	    			 Map.mapControl=0;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=true;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-
-	    	 if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
-	    	 {
-	    		 if (Mouse.isButtonDown(0)){
-	    			 Map.mapControl=1;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=true;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-
-	    	 if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
-	    	 {
-	    		 if (Mouse.isButtonDown(0)){ 
-	    			 Map.mapControl=2;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=true;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-
-	    	 if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
-	    	 {
-	    		 if (Mouse.isButtonDown(0)){
-	    			 Map.mapControl=3;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=true;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-
-	    	 if((posX>((gc.getWidth()/5)*4)))
-	    	 {
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=4;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=true;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	     }
-	     
-	     //
-	     //Set up for the Multiplayer maps
-	     else{
-	    	 if((posX<((gc.getWidth()/5)*1)))
-	    	 {
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=0;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=false;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	    	 if((posX>((gc.getWidth()/5)*1) && posX<((gc.getWidth()/5)*2)))
-	    	 {
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=1;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=false;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	    	 if((posX>((gc.getWidth()/5)*2) && posX<((gc.getWidth()/5)*3)))
-	    	 {
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=2;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=false;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	    	 if((posX>((gc.getWidth()/5)*3) && posX<((gc.getWidth()/5)*4)))
-	    	 {
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=3;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=false;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	    	 if((posX>((gc.getWidth()/5)*4))){
-	    		 if(Mouse.isButtonDown(0)){
-	    			 Map.mapControl=4;
-	    			 Map.mapinit();
-	    			 theme.stop();
-	    			 Map.IsThisAI=false;
-	    			 sbg.enterState(Barnacle.map);
-	    		 }
-	    	 }
-	     }
-	     
-	     
 	        
 	        //sets if player 1 is Doge
 			if(Keyboard.isKeyDown(Keyboard.KEY_D)){

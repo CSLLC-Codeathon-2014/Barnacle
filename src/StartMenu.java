@@ -5,8 +5,10 @@ public class StartMenu extends BasicGameState{
 	
 	private int state;
     MenuControl MenuManager;
-    MenuClick Click;
     InputGetter get = new InputGetter();
+    int width;
+    int height;
+    boolean setWidth= true;
 	
 	public StartMenu(int state) {
 		 this.state = state;
@@ -18,20 +20,21 @@ public class StartMenu extends BasicGameState{
 		MenuManager = new MenuControl();
 		MenuManager.initLevel();
 		MenuManager.initMain();
-		Click = new MenuClick();
 }
-
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException{
+		if(setWidth){
+			width=gc.getWidth();
+			height=gc.getHeight();
+			MenuManager.initClick(sbg, width, height);
+			setWidth=false;
+		}
 		if(MenuManager.getGameType()==0)
 			MenuManager.menuSelect(gc,sbg,g);
 		else if(MenuManager.getGameType()==1)
 			MenuManager.levelSelect(gc,sbg,g);
-		get.getKey();
-		get.getChar();
 	}
-
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
@@ -40,12 +43,15 @@ public class StartMenu extends BasicGameState{
 		else if(MenuManager.getGameType()==1)
 			MenuManager.levelUpdate(gc, sbg, delta);
 	}
-
-	public void mousePressed(int button, int x, int y){
+	public void mouseClicked(int button, int x, int y, int clickCount){
 		if(MenuManager.getGameType()==0)
-			Click.MainClick(button, x, y);
-		else if(MenuManager.getGameType()==1)
-			Click.LevelClick(button, x, y);
+			MenuManager.MainClick(button, x, y);
+		else if(MenuManager.getGameType()==1){
+				try {
+					MenuManager.LevelClick(button, x, y);
+				} 
+				catch (SlickException e){e.printStackTrace();}
+		}
 	}
 	
 	@Override
