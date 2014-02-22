@@ -1,6 +1,5 @@
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;

@@ -156,13 +156,14 @@ public class MenuControl {
 	    posY = Mouse.getY();
 	     
 	     if(IsThereAI){
-	    	 if((posX<((gc.getWidth()/5)*1)))
+	    	 if((posX<((gc.getWidth()/5))))
 	    	 {
 	    		 if (Mouse.isButtonDown(0)){
 	    			 Map.mapControl=0;
 	    			 Map.mapinit();
 	    			 Map.IsThisAI=true;
 	    			 theme.stop();
+	    			 sbg.enterState(Barnacle.map);
 	    		 }
 	    	 }
 
