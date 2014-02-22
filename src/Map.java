@@ -1,16 +1,24 @@
 import java.awt.Font;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
-import org.newdawn.slick.util.ResourceLoader;
-import org.newdawn.slick.geom.*;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
-public class Map extends BasicGameState{
+public class Map extends BasicGameState {
 	private int state;
 	static Image land;
 	static Image chicken1;
@@ -23,38 +31,37 @@ public class Map extends BasicGameState{
 	Image wnner;
 	Image win1;
 	Image win2;
-	static int win1x=2000;
-	static int win1y=2000;
-	static int win2x=2000;
-	static int win2y=2000;
-	static int winx=2000;
-	static int winy=2000;
-	static int play1X;
-	static int play1Y;
-	static int Vel1X=0;
-	static int Vel1Y=0;
-	static int play2X;
-	static int play2Y;
-	static int Vel2X=0;
-	static int Vel2Y=0;
-	static int fire1X = 2000;
-	static int fire1Y = 2000;
-	static int fire2X = 2000;
-	static int fire2Y = 2000;
+	int win1x=2000;
+	int win1y=2000;
+	int win2x=2000;
+	int win2y=2000;
+	int winx=2000;
+	int winy=2000;
+	int play1X=450;
+	int play1Y=400;
+	int Vel1X=0;
+	int Vel1Y=0;
+	int play2X=900;
+	int play2Y=400;
+	int Vel2X=0;
+	int Vel2Y=0;
+	int fire1X = 2000;
+	int fire1Y = 2000;
+	int fire2X = 2000;
+	int fire2Y = 2000;
 	Boolean bool1=false;
 	Boolean bool2=false;
 	Velocity player1;
 	Velocity proj1;
 	Velocity player2;
+	VelocityAI aiPlayer;
 	Velocity proj2;
 	Circle projCircle1 = null;
 	Circle projCircle2 = null;
-	static int playerhit1=0;
-	static int playerhit2=0;
+	int playerhit1=0;
+	int playerhit2=0;
 	boolean CanBeHit1 =true;
-	static boolean CanBeHit2 =true;
-	public String player1Score = "0";
-	public String player2Score = "0";
+	boolean CanBeHit2 =true;
 	public String winner = "";
 	TrueTypeFont font;
 	static boolean dogepossible;
@@ -66,15 +73,16 @@ public class Map extends BasicGameState{
 	static boolean shootCheck=true;
     private Audio shoot2;
 	static boolean shootCheck2=true;
-    static Audio hit;
+    private Audio hit;
 	static boolean hitCheck=true;
-	static int hitx1=2000;
-	static int hitx2=2000;
-	static int hity1=2000;
-	static int hity2=2000;
-	static int tiex =2000;
-	static int tiey =2000;
-	static int mapControl=0;
+	int hitx1=2000;
+	int hitx2=2000;
+	int hity1=2000;
+	int hity2=2000;
+	int tiex =2000;
+	int tiey =2000;
+	static int mapControl;
+	static boolean IsThisAI = false;
 	
 	public Map(int state) {
 		 this.state = state;
@@ -96,6 +104,7 @@ public class Map extends BasicGameState{
 		win2= new Image("images/2win.png");
 		player1 = new Velocity(play1X, play1Y, Vel1X, Vel1Y);
 		player2 = new Velocity(play2X, play2Y, Vel2X, Vel2Y);
+		aiPlayer = new VelocityAI(play2X, play2Y, Vel2X, Vel2Y);
 		
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
@@ -142,14 +151,14 @@ public class Map extends BasicGameState{
 	if(mapControl==3)
 		land = new Image("images/ice.png");	
 	if(mapControl==4)
-		land = new Image("image/bg.png");	
+		land = new Image("images/bg.png");
 	}
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setFont(font); 
-		g.setColor(Color.red);
+		g.setColor(Color.cyan);
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		if(dogepossible)
 		chicken1.draw(play1X, play1Y, gc.getWidth()/18, gc.getHeight()/8);
@@ -164,12 +173,11 @@ public class Map extends BasicGameState{
 		hit2.draw(hitx2,hity2);
 		hud.draw(0,0,gc.getWidth(), gc.getHeight());
 		g.drawString("" + playerhit1, gc.getWidth()/2-(gc.getWidth()/9), (int) (gc.getHeight()-((gc.getHeight()/90)*11.5)));
-		System.out.println("Y Pos is: " + (gc.getHeight()-(gc.getHeight()/900*113)));
-		System.out.println("height is: " + gc.getHeight());
-		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), (int) (gc.getHeight()-(gc.getHeight()/90*11.5)));
+		g.drawString("" + playerhit2, gc.getWidth()/2+(gc.getWidth()/15), (int) (gc.getHeight()-((gc.getHeight()/90)*11.5)));
 		g.drawString("You both tied!", tiex, tiey);
-		if(playerhit2>9 || playerhit1>9)
-		displayWon();
+		win1.draw(win1x, win1y);
+		win2.draw(win2x,win2y);
+		wnner.draw(winx, winy);
 	}
 	
 	public void displayWon(){
@@ -182,6 +190,7 @@ public class Map extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		if(musicCheck){
+			Mouse.setGrabbed(true);
 			try {
 				
 				if(mapControl==0)
@@ -201,7 +210,9 @@ public class Map extends BasicGameState{
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }
-		}
+			music.playAsSoundEffect(1.0f, 1.0f, false);
+			musicCheck=false;
+			}
 			else{}
 		//attempt to create sound for shooting
 		
@@ -238,143 +249,198 @@ public class Map extends BasicGameState{
 		
 		//
 		//PLAYER 2
-		player2.CalcPosPlay2(gc);
-		play2X=player2.posX();
-		play2Y=player2.posY();
-		if(input.isKeyDown(Input.KEY_NUMPAD0)){
-			bool2=true;
-			fire2X=play2X+10;
-			fire2Y=play2Y;
-			projCircle2= new Circle(fire2X, fire2Y, 40);
-			proj2 = new Velocity(fire2X, fire2Y, -20, -2);
-			shootCheck2=true;
+		if(IsThisAI){
+			aiPlayer.AiInput();
+			aiPlayer.CalcPosAI(gc);
+			play2X=aiPlayer.posX();
+			play2Y=aiPlayer.posY();
+			
+			//checks whether to shoot
+			aiPlayer.LocationChecker(play1Y,play2Y);
+			
+			if(aiPlayer.shootTime){
+				bool2=true;
+				fire2X=play2X+10;
+				fire2Y=play2Y;
+				projCircle2= new Circle(fire2X, fire2Y, 40);
+				proj2 = new Velocity(fire2X, fire2Y, -20, -2);
+				shootCheck2=true;
+			}
+			
+			if(bool2==true && !(aiPlayer.shootTime)){
+				if(shootCheck2==true){	
+					shoot2.playAsSoundEffect(1.0f, 1.0f, false);
+					shootCheck2=false;
+				}
+				proj2.CalcProj();
+				projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
+				fire2X=proj2.posX();
+				fire2Y=proj2.posY();
+			}
 		}
 		
-		if(bool2==true && !(input.isKeyDown(Input.KEY_NUMPAD0))){
-			if(shootCheck2==true){	
-				shoot2.playAsSoundEffect(1.0f, 1.0f, false);
-				shootCheck2=false;
+		else{
+			player2.CalcPosPlay2(gc);
+			play2X=player2.posX();
+			play2Y=player2.posY();
+			if(input.isKeyDown(Input.KEY_NUMPAD0)){
+				bool2=true;
+				fire2X=play2X+10;
+				fire2Y=play2Y;
+				projCircle2= new Circle(fire2X, fire2Y, 40);
+				proj2 = new Velocity(fire2X, fire2Y, -20, -2);
+				shootCheck2=true;
 			}
-			proj2.CalcProj();
-			projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
-			fire2X=proj2.posX();
-			fire2Y=proj2.posY();
+
+			if(bool2==true && !(input.isKeyDown(Input.KEY_NUMPAD0))){
+				if(shootCheck2==true){	
+					shoot2.playAsSoundEffect(1.0f, 1.0f, false);
+					shootCheck2=false;
+				}
+				proj2.CalcProj();
+				projCircle2= new Circle(fire2X+25, fire2Y+25, 40);
+				fire2X=proj2.posX();
+				fire2Y=proj2.posY();
+			}
+			//END OF PLAYER 2
+			//
 		}
 		//END OF PLAYER 2
 		//
 		
 		//player 1 collision detector
-		if(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==true){
-			playerhit1++;
-			player2.VelY=-40;
-			CanBeHit2=false;
-			hit.playAsSoundEffect(1.0f, 1.0f, false);
-			hitx1=fire1X;
-			hity1=fire1Y;
-		}
-		
-		if(!(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==false)){
-			hitx1=2000;
-			hity1=2000;
-			CanBeHit2=true;
-		}
-		
-		
-		//player 2 collision detector
-		if(projCircle2.contains(play1X+90, play1Y+10) && CanBeHit1==true){
-			playerhit2++;
-			player1.VelY=-40;
-			CanBeHit1=false;
-			hit.playAsSoundEffect(1.0f, 1.0f, false);
-			hitx2=fire2X;
-			hity2=fire2Y;
-		}
-		
-		if(!(projCircle2.contains(play1X+90, play1Y+10) && CanBeHit1==false)){
-			hitx2=2000;
-			hity2=2000;
-			CanBeHit1=true;
-		}
-		
-		//check for win
-		if((playerhit1)>9 && winx>=1000){
-			if(playerhit2>9 && winx>=1000){
-				win2x=gc.getWidth()/32*13;
-				win2y=gc.getHeight()/9*7;
-				tiex=gc.getWidth()/32*13;;
-				tiey=gc.getHeight()/9;
+			if(IsThisAI){
+				if(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==true){
+					playerhit1++;
+					aiPlayer.VelY=-40;
+					CanBeHit2=false;
+					hit.playAsSoundEffect(1.0f, 1.0f, false);
+					hitx1=fire1X;
+					hity1=fire1Y;
+				}
+				if(!(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==false)){
+					hitx1=2000;
+					hity1=2000;
+					CanBeHit2=true;
+				}
 			}
-			winx=gc.getWidth()/32*13;
-			winy=gc.getHeight()/4;
-			win1x=gc.getWidth()/32*13;
-			win1y=gc.getHeight()/18*13;
-			if(dogepossible){
-				try {
-			        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
-			        } catch (IOException e) {
-			        e.printStackTrace();
-			    }
-				wow.playAsSoundEffect(1.0f, 1.0f, false);
+			else{
+				if(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==true){
+					playerhit1++;
+					player2.VelY=-40;
+					CanBeHit2=false;
+					hit.playAsSoundEffect(1.0f, 1.0f, false);
+					hitx1=fire1X;
+					hity1=fire1Y;
+				}
+				
+				if(!(projCircle1.contains(play2X+10, play2Y+10) && CanBeHit2==false)){
+					hitx1=2000;
+					hity1=2000;
+					CanBeHit2=true;
+				}
 			}
-		}
-		if(playerhit2>9 && win1x>=1000){
-			winner = "Player 2 wins!";
-			winx=gc.getWidth()/32*13;
-			winy=gc.getHeight()/4;
-			win2x=gc.getWidth()/64*27;
-			win2y=gc.getHeight()/18*13;
-		}
-		
-		if(playerhit2>9 || playerhit1>9){
-			player1.posX=gc.getWidth()/7*2;
-			player1.posY=gc.getHeight()/18*7;
-			player2.posX=gc.getWidth()/16*9;;
-			player2.posY=gc.getHeight()/18*7;
-			fire1X=2000;
-			fire1Y=2000;
-			fire2X=2000;
-			fire2Y=2000;
-		}
-		
-		if(input.isKeyDown(Input.KEY_ESCAPE)){
-			music.stop();
-			player1.posX=gc.getWidth()/7*2;
-			player1.posY=gc.getHeight()/18*7;
-			player2.posX=gc.getWidth()/16*9;;
-			player2.posY=gc.getHeight()/18*7;
-			musicCheck=true;
-			playerhit1=0;
-			playerhit2=0;
-			winner="";
-			hitx1=2000;
-			hitx2=2000;
-			hity1=2000;
-			hity2=2000;
-			tiex =2000;
-			tiey =2000;
-			winx=2000;
-			winy=2000;
-			win1x=2000;
-			win1y=2000;
-			win2x=2000;
-			win2y=2000;
-			play1X=450;
-			play1Y=400;
-			Vel1X=0;
-			Vel1Y=0;
-			play2X=900;
-			play2Y=400;
-			Vel2X=0;
-			Vel2Y=0;
-			fire1X = 2000;
-			fire1Y = 2000;
-			fire2X = 2000;
-			fire2Y = 2000;
-			bool1=false;
-			bool2=false;
-			StartMenu.theme.playAsSoundEffect(1.0f, 1.0f, false);
-			sbg.enterState(Barnacle.startMenu);
-		}
+				
+				//player 2 collision detector
+				if(projCircle2.contains(play1X+90, play1Y+10) && CanBeHit1==true){
+					playerhit2++;
+					player1.VelY=-40;
+					CanBeHit1=false;
+					hit.playAsSoundEffect(1.0f, 1.0f, false);
+					hitx2=fire2X;
+					hity2=fire2Y;
+				}
+				
+				if(!(projCircle2.contains(play1X+90, play1Y+10) && CanBeHit1==false)){
+					hitx2=2000;
+					hity2=2000;
+					CanBeHit1=true;
+				}
+				
+				//check for win
+						if((playerhit1)>9 && winx>=1000){
+							if(playerhit2>9 && winx>=1000){
+								win2x=gc.getWidth()/32*13;
+								win2y=gc.getHeight()/9*7;
+								tiex=gc.getWidth()/32*13;;
+								tiey=gc.getHeight()/9;
+							}
+							winx=gc.getWidth()/32*13;
+							winy=gc.getHeight()/4;
+							win1x=gc.getWidth()/32*13;
+							win1y=gc.getHeight()/18*13;
+							if(dogepossible){
+								try {
+							        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/wow.ogg"));
+							        } catch (IOException e) {
+							        e.printStackTrace();
+							    }
+								wow.playAsSoundEffect(1.0f, 1.0f, false);
+							}
+						}
+						if(playerhit2>9 && win1x>=1000){
+							winner = "Player 2 wins!";
+							winx=gc.getWidth()/32*13;
+							winy=gc.getHeight()/4;
+							win2x=gc.getWidth()/64*27;
+							win2y=gc.getHeight()/18*13;
+						}
+						
+						if(playerhit2>9 || playerhit1>9){
+							player1.posX=gc.getWidth()/7*2;
+							player1.posY=gc.getHeight()/18*7;
+							player2.posX=gc.getWidth()/16*9;
+							player2.posY=gc.getHeight()/18*7;
+							aiPlayer.posX=gc.getWidth()/16*9;
+							aiPlayer.posY=gc.getHeight()/18*7;
+							fire1X=2000;
+							fire1Y=2000;
+							fire2X=2000;
+							fire2Y=2000;
+						}
+				
+				if(input.isKeyDown(Input.KEY_ESCAPE)){
+					music.stop();
+					player1.posX=gc.getWidth()/7*2;
+					player1.posY=gc.getHeight()/18*7;
+					player2.posX=gc.getWidth()/16*9;
+					player2.posY=gc.getHeight()/18*7;
+					aiPlayer.posX=gc.getWidth()/16*9;
+					aiPlayer.posY=gc.getHeight()/18*7;
+					musicCheck=true;
+					playerhit1=0;
+					playerhit2=0;
+					winner="";
+					hitx1=2000;
+					hitx2=2000;
+					hity1=2000;
+					hity2=2000;
+					tiex =2000;
+					tiey =2000;
+					winx=2000;
+					winy=2000;
+					win1x=2000;
+					win1y=2000;
+					win2x=2000;
+					win2y=2000;
+					play1X=450;
+					play1Y=400;
+					Vel1X=0;
+					Vel1Y=0;
+					play2X=900;
+					play2Y=400;
+					Vel2X=0;
+					Vel2Y=0;
+					fire1X = 2000;
+					fire1Y = 2000;
+					fire2X = 2000;
+					fire2Y = 2000;
+					bool1=false;
+					bool2=false;
+					MenuControl.theme.playAsSoundEffect(1.0f, 1.0f, false);
+					Mouse.setGrabbed(false);
+					sbg.enterState(Barnacle.startMenu);
+				}
 	}
 
 	@Override
