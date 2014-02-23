@@ -1,6 +1,5 @@
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -59,7 +58,7 @@ public class Velocity {
 			VelY=20;
 			
 			try {
-		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/jump1.ogg"));
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/jump1.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }
@@ -137,7 +136,7 @@ public class Velocity {
 			VelY=20;
 			
 			try {
-		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/jump2.ogg"));
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/jump2.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }

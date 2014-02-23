@@ -12,22 +12,35 @@ public class Player
     private boolean canBeHit;
     
     public Player() throws SlickException{
-        sprite=new Image("chickun1.png");
+        sprite=new Image("resources/images/chickun1.png");
         x=0;
         y=0;
         xVel=0;
         yVel=0;
         score=0;
-        canBeHit=false;
+        canBeHit=true;
     }
     public Player(String filename) throws SlickException{
         this();
         sprite=new Image(filename);
+        x=0;
+        y=0;
+        xVel=0;
+        yVel=0;
+        score=0;
+        canBeHit=true;
     }
+    
     public Player(String filename, int initX, int initY) throws SlickException{
         this(filename);
         x=initX;
         y=initY;
+        x=0;
+        y=0;
+        xVel=0;
+        yVel=0;
+        score=0;
+        canBeHit=true;
     }
 
     // Getters
@@ -57,6 +70,7 @@ public class Player
     public void setSprite(Image newSprite) throws SlickException{
         sprite= newSprite;
     }
+    
     public void setSprite(String filename) throws SlickException{
         sprite=new Image(filename);
     }
