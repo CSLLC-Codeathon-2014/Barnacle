@@ -14,7 +14,7 @@ public class MenuClick extends MenuCommands {
 	}
 	
 	public void MainClick(int button, int x, int y){
-		if((x>(width-350) && y>(height-80) && (y>(40) && y<(110))))
+		if((x>(width/8*5) && y>height/4*3))
 	     {
 	         if(button==0){
 	        	 System.exit(0);
