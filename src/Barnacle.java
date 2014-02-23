@@ -14,7 +14,7 @@ public class Barnacle extends StateBasedGame{
 		super(gamename);
 		this.addState(new res(res));
 		this.addState(new StartMenu(startMenu));
-		this.addState(new Map(map));;
+		this.addState(new Map(map));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException{

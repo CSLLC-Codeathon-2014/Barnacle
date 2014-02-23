@@ -28,8 +28,8 @@ public class MenuCommands {
 	boolean clickable=false;
     
     public void initMain() throws SlickException{
-		exitGame = new Image("images/exitGame.png");
-	    title = new Image("images/title.png");
+		exitGame = new Image("resources/images/exitGame.png");
+	    title = new Image("resources/images/title.png");
 		
 		//set font
 		try {
@@ -44,14 +44,14 @@ public class MenuCommands {
 		}
 		
 		try {
-	        theme = AudioLoader.getAudio("OGG", new FileInputStream("src/music/menu.ogg"));
+	        theme = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/menu.ogg"));
 	     } catch (IOException e){
 	        e.printStackTrace();
 	    }	
 	}
     
     public void initLevel() throws SlickException{
-		menu = new Image("images/menu.png");
+		menu = new Image("resources/images/menu.png");
 		wowtime=true;
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
@@ -65,12 +65,12 @@ public class MenuCommands {
 		}
 		
 		 try {
-		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
+		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
 		     } catch (IOException e){
 		        e.printStackTrace();
 		    }
 		try {
-			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
+			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
         } catch (IOException e) {
         	e.printStackTrace();
         }

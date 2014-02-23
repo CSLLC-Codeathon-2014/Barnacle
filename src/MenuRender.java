@@ -1,9 +1,8 @@
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-public class MenuControl extends MenuClick{
+public class MenuRender extends MenuUpdate{
 	
 	static int posX = Mouse.getX();
     static int posY = Mouse.getY();
@@ -17,19 +16,6 @@ public class MenuControl extends MenuClick{
 		g.drawString("Options", gc.getWidth()/100*82, gc.getHeight()/3*2);
 	    title.draw(gc.getWidth()/6, gc.getHeight()/4, gc.getWidth()/3*2, gc.getHeight()/4);
 	    exitGame.draw(gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()-(gc.getHeight()/8));
-	}
-	
-	public void menuUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		if(playTheme ==true){
-			theme.playAsSoundEffect(1.0f, 1.0f, false);
-			playTheme=false;
-			Mouse.setGrabbed(false);
-			}
-			else{}
-		
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-				Screen=0;
-			}
 	}
 	
 	public void levelSelect(GameContainer gc, StateBasedGame sbg, Graphics g){
@@ -48,42 +34,8 @@ public class MenuControl extends MenuClick{
 		g.drawString("Ice Cavern", gc.getWidth()-(gc.getWidth()/28*10), gc.getHeight()/8);
 		g.drawString("Training Mode", gc.getWidth()-(gc.getWidth()/11*2), gc.getHeight()/8);
 	}
-
-	public void levelUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		Mouse.setGrabbed(false);
-	        
-	        //sets if player 1 is Doge
-			if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-				Map.dogepossible=true;
-				Map.dogepossible=true;
-				Map.secondinit();
-				Map.secondinit();
-				if(wowtime==true){
-				wowEffect.playAsSoundEffect(1.0f, 1.0f, false);
-				wowtime=false;
-				}
-			}
-			
-			//sets if player 2 is Cage
-			if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)){
-				Map.cagepossible=true;
-				Map.cagepossible=true;
-				Map.secondinit();
-				Map.secondinit();
-				if(cagetime==true){
-				cageEffect.playAsSoundEffect(1.0f, 1.0f, false);
-				cagetime=false;
-				}
-				else{}
-			}
-			
-			//Escape does nothing right now, just here if I decide it has a use.
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-				Screen = 0;
-			}
-	}
 	
-	public int getGameType(){
+	public int getMenuType(){
 		return Screen;
 	}
 }

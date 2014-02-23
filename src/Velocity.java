@@ -58,7 +58,7 @@ public class Velocity {
 			VelY=20;
 			
 			try {
-		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/music/jump1.ogg"));
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/jump1.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }
@@ -136,7 +136,7 @@ public class Velocity {
 			VelY=20;
 			
 			try {
-		        jump = AudioLoader.getAudio("OGG", new FileInputStream("src/music/jump2.ogg"));
+		        jump = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/jump2.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }

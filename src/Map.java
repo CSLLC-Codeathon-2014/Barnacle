@@ -19,38 +19,108 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Map extends BasicGameState {
+	/*	
+	private int state;
+	static int mapControl;
+	TrueTypeFont font;
+	static boolean dogepossible;
+	static boolean cagepossible;
+	static Player player1;
+	static Player player2;
+	static Image land;
+	static boolean IsThisAI = false;
+	
+	public Map(int state){
+		 this.state = state;
+	}
+	
+	@Override
+	public void init(GameContainer gc, StateBasedGame sbg)
+			throws SlickException {
+		player1 = new Player();
+		player2 = new Player();
+	}
+	
+	public static void secondinit()
+			throws SlickException{
+		if(dogepossible==true) 
+		    player1.setSprite("resources/images/doge.png");
+		else if (dogepossible==false)
+		    player1.setSprite("resources/images/chickun1.png");
+		if(cagepossible==true)
+		    player2.setSprite("resources/images/cage.png");
+		else if (cagepossible==false)
+		    player2.setSprite("resources/images/chickun2.png");
+	}
+	
+	//controls the maps
+	public static void mapinit() throws SlickException{
+	if(mapControl==0)
+		land = new Image("resources/images/ToxicWasteland.png");
+	if(mapControl==1)
+		land = new Image("resources/images/paradise.png");	
+	if(mapControl==2)
+		land = new Image("resources/images/LavaPit.png");	
+	if(mapControl==3)
+		land = new Image("resources/images/ice.png");	
+	if(mapControl==4)
+		land = new Image("resources/images/bg.png");
+	}
+	
+	@Override
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+			throws SlickException {
+		
+	}
+	
+	public void displayWon(){
+	}
+
+	@Override
+	public void update(GameContainer gc, StateBasedGame sbg, int delta)
+		throws SlickException{
+		
+	}
+
+	@Override
+	public int getID() {
+		return this.state;
+	}
+	
+	*/
 	private int state;
 	static Image land;
-	static Image chicken1;
+	static Image chicken1; //player 1 character's image
 	static Image chicken2;
 	Image fire1;
 	Image fire2;
 	Image hud;
-	static Image hit1;
+	static Image hit1; //"boom" image, when someone gets hit
 	static Image hit2;
+	//win related vars
 	Image wnner;
 	Image win1;
 	Image win2;
-	int win1x=2000;
-	int win1y=2000;
-	int win2x=2000;
-	int win2y=2000;
-	int winx=2000;
+	int winx=2000; // location of you're winner
 	int winy=2000;
-	int play1X=450;
+	int win1x=2000; // "player1 has won!"
+	int win1y=2000;
+	int win2x=2000; // "player2 has won!"
+	int win2y=2000;
+	int play1X=450; // Location of player 1
 	int play1Y=400;
 	int Vel1X=0;
 	int Vel1Y=0;
-	int play2X=900;
+	int play2X=900; // Location of player 2
 	int play2Y=400;
 	int Vel2X=0;
 	int Vel2Y=0;
-	int fire1X = 2000;
+	int fire1X = 2000; // location of fireball for player 1
 	int fire1Y = 2000;
-	int fire2X = 2000;
+	int fire2X = 2000; // location of fireball for player 2
 	int fire2Y = 2000;
-	Boolean bool1=false;
-	Boolean bool2=false;
+	Boolean bool1=false; //whether player 1 is firing
+	Boolean bool2=false; //whether player 2 is firing
 	Velocity player1;
 	Velocity proj1;
 	Velocity player2;
@@ -58,11 +128,10 @@ public class Map extends BasicGameState {
 	Velocity proj2;
 	Circle projCircle1 = null;
 	Circle projCircle2 = null;
-	int playerhit1=0;
+	int playerhit1=0; // score of player 1
 	int playerhit2=0;
-	boolean CanBeHit1 =true;
+	boolean CanBeHit1 =true; //Can this person be hit?
 	boolean CanBeHit2 =true;
-	public String winner = "";
 	TrueTypeFont font;
 	static boolean dogepossible;
 	static boolean cagepossible;
@@ -91,17 +160,17 @@ public class Map extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		land = new Image("images/ToxicWasteland.png");
-		chicken1= new Image("images/chickun1.png");
-	    chicken2= new Image("images/chickun2.png");
-		fire1= new Image("images/fure.png");
-		fire2= new Image("images/fure.png");
-		hit1= new Image("images/boom.png");
-		hit2= new Image("images/boom.png");
-		hud= new Image("images/hud.png");
-		wnner= new Image("images/wnner.png");
-		win1= new Image("images/1win.png");
-		win2= new Image("images/2win.png");
+		land = new Image("resources/images/ToxicWasteland.png");
+		chicken1= new Image("resources/images/chickun1.png");
+	    chicken2= new Image("resources/images/chickun2.png");
+		fire1= new Image("resources/images/fure.png");
+		fire2= new Image("resources/images/fure.png");
+		hit1= new Image("resources/images/boom.png");
+		hit2= new Image("resources/images/boom.png");
+		hud= new Image("resources/images/hud.png");
+		wnner= new Image("resources/images/wnner.png");
+		win1= new Image("resources/images/1win.png");
+		win2= new Image("resources/images/2win.png");
 		player1 = new Velocity(play1X, play1Y, Vel1X, Vel1Y);
 		player2 = new Velocity(play2X, play2Y, Vel2X, Vel2Y);
 		aiPlayer = new VelocityAI(play2X, play2Y, Vel2X, Vel2Y);
@@ -118,40 +187,40 @@ public class Map extends BasicGameState {
 		}	
 		
 		try {
-	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("src/music/fire.ogg"));
+	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("src/music/fire.ogg"));
+	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        hit = AudioLoader.getAudio("OGG", new FileInputStream("src/music/hit.ogg"));
+	        hit = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/hit.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 	}
 	
 	public static void secondinit() 
 			throws SlickException{
 		if(dogepossible==true) 
-		    chicken1= new Image("images/doge.png");
+		    chicken1= new Image("resources/images/doge.png");
 		else if (dogepossible==false)
-		    chicken1= new Image("images/chickun1.png");
+		    chicken1= new Image("resources/images/chickun1.png");
 		if(cagepossible==true)
-		    chicken2= new Image("images/cage.png");
+		    chicken2= new Image("resources/images/cage.png");
 		else if (cagepossible==false)
-		    chicken2= new Image("images/chickun2.png");
+		    chicken2= new Image("resources/images/chickun2.png");
 	}
 	
 	//controls the maps
 	public static void mapinit() throws SlickException{
 	if(mapControl==0)
-		land = new Image("images/ToxicWasteland.png");
+		land = new Image("resources/images/ToxicWasteland.png");
 	if(mapControl==1)
-		land = new Image("images/paradise.png");	
+		land = new Image("resources/images/paradise.png");	
 	if(mapControl==2)
-		land = new Image("images/LavaPit.png");	
+		land = new Image("resources/images/LavaPit.png");	
 	if(mapControl==3)
-		land = new Image("images/ice.png");	
+		land = new Image("resources/images/ice.png");	
 	if(mapControl==4)
-		land = new Image("images/bg.png");
+		land = new Image("resources/images/bg.png");
 	}
 	
 	@Override
@@ -194,19 +263,19 @@ public class Map extends BasicGameState {
 			try {
 				
 				if(mapControl==0)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/magic.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/magic.ogg"));
 				else if(mapControl==1)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/icu.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/icu.ogg"));
 				else if(mapControl==2)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/castle.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/castle.ogg"));
 				else if(mapControl==3)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/attraction.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/attraction.ogg"));
 				else if(mapControl==4)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/hendl.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/hendl.ogg"));
 				else
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/castle.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/castle.ogg"));
 				if(dogepossible)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wowsong.ogg"));
+					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wowsong.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }
@@ -371,7 +440,7 @@ public class Map extends BasicGameState {
 							win1y=gc.getHeight()/18*13;
 							if(dogepossible){
 								try {
-							        wow = AudioLoader.getAudio("OGG", new FileInputStream("src/music/wow.ogg"));
+							        wow = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
 							        } catch (IOException e) {
 							        e.printStackTrace();
 							    }
@@ -379,7 +448,6 @@ public class Map extends BasicGameState {
 							}
 						}
 						if(playerhit2>9 && win1x>=1000){
-							winner = "Player 2 wins!";
 							winx=gc.getWidth()/32*13;
 							winy=gc.getHeight()/4;
 							win2x=gc.getWidth()/64*27;
@@ -410,7 +478,6 @@ public class Map extends BasicGameState {
 					musicCheck=true;
 					playerhit1=0;
 					playerhit2=0;
-					winner="";
 					hitx1=2000;
 					hitx2=2000;
 					hity1=2000;
@@ -437,7 +504,7 @@ public class Map extends BasicGameState {
 					fire2Y = 2000;
 					bool1=false;
 					bool2=false;
-					MenuControl.theme.playAsSoundEffect(1.0f, 1.0f, false);
+					MenuRender.theme.playAsSoundEffect(1.0f, 1.0f, false);
 					Mouse.setGrabbed(false);
 					sbg.enterState(Barnacle.startMenu);
 				}
@@ -447,4 +514,6 @@ public class Map extends BasicGameState {
 	public int getID() {
 		return this.state;
 	}
+	
+	//*/
 }

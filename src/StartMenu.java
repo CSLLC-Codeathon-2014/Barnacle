@@ -4,7 +4,7 @@ import org.newdawn.slick.state.*;
 public class StartMenu extends BasicGameState{
 	
 	private int state;
-    MenuControl MenuManager;
+    MenuRender MenuManager;
     InputGetter get = new InputGetter();
     int width;
     int height;
@@ -17,7 +17,7 @@ public class StartMenu extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		MenuManager = new MenuControl();
+		MenuManager = new MenuRender();
 		MenuManager.initLevel();
 		MenuManager.initMain();
 	}
@@ -31,25 +31,25 @@ public class StartMenu extends BasicGameState{
 			MenuManager.initClick(sbg, width, height);
 			setWidth=false;
 		}
-		if(MenuManager.getGameType()==0)
+		if(MenuManager.getMenuType()==0)
 			MenuManager.menuSelect(gc,sbg,g);
-		else if(MenuManager.getGameType()==1)
+		else if(MenuManager.getMenuType()==1)
 			MenuManager.levelSelect(gc,sbg,g);
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
-		if(MenuManager.getGameType()==0)
+		if(MenuManager.getMenuType()==0)
 			MenuManager.menuUpdate(gc, sbg, delta);
-		else if(MenuManager.getGameType()==1)
+		else if(MenuManager.getMenuType()==1)
 			MenuManager.levelUpdate(gc, sbg, delta);
 	}
 	
 	public void mouseClicked(int button, int x, int y, int clickCount){
-		if(MenuManager.getGameType()==0)
+		if(MenuManager.getMenuType()==0)
 			MenuManager.MainClick(button, x, y);
-		else if(MenuManager.getGameType()==1){
+		else if(MenuManager.getMenuType()==1){
 			try {
 				MenuManager.LevelClick(button, x, y);
 			} 
