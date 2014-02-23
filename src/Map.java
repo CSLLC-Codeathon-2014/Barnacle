@@ -1,5 +1,4 @@
 import java.awt.Font;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.lwjgl.input.Mouse;
@@ -186,13 +185,13 @@ public class Map extends BasicGameState {
 		}	
 		
 		try {
-	        shoot = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/fire.ogg"));
+	        shoot = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        shoot2 = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/fire.ogg"));
+	        shoot2 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/fire.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 		try {
-	        hit = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/hit.ogg"));
+	        hit = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/hit.ogg"));
         } catch (IOException e) {e.printStackTrace();}
 	}
 	
@@ -262,19 +261,19 @@ public class Map extends BasicGameState {
 			try {
 				
 				if(mapControl==0)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/magic.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/magic.ogg"));
 				else if(mapControl==1)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/icu.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/icu.ogg"));
 				else if(mapControl==2)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/castle.ogg"));
+					music = AudioLoader.getAudio("OGG",ResourceLoader.getResourceAsStream("resources/music/castle.ogg"));
 				else if(mapControl==3)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/attraction.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/attraction.ogg"));
 				else if(mapControl==4)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/hendl.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/hendl.ogg"));
 				else
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/castle.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/castle.ogg"));
 				if(dogepossible)
-					music = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wowsong.ogg"));
+					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/wowsong.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }
@@ -439,7 +438,7 @@ public class Map extends BasicGameState {
 							win1y=gc.getHeight()/18*13;
 							if(dogepossible){
 								try {
-							        wow = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
+							        wow = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/wow.ogg"));
 							        } catch (IOException e) {
 							        e.printStackTrace();
 							    }

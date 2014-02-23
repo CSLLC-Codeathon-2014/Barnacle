@@ -1,10 +1,9 @@
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Random;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class VelocityAI {
 	int posX;
@@ -103,7 +102,7 @@ public class VelocityAI {
 			VelY=20;
 			
 			try {
-		        jump = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/jump2.ogg"));
+		        jump = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/jump2.ogg"));
 		        } catch (IOException e) {
 		        e.printStackTrace();
 		    }

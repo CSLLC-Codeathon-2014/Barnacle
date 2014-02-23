@@ -44,7 +44,7 @@ public class MenuCommands {
 		}
 		
 		try {
-	        theme = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/menu.ogg"));
+	        theme = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/menu.ogg"));
 	     } catch (IOException e){
 	        e.printStackTrace();
 	    }	
