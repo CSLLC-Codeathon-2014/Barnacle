@@ -1,5 +1,5 @@
 import java.awt.Font;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.newdawn.slick.Image;
@@ -65,12 +65,12 @@ public class MenuCommands {
 		}
 		
 		 try {
-		        wowEffect = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
+		        wowEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/wow.ogg"));
 		     } catch (IOException e){
 		        e.printStackTrace();
 		    }
 		try {
-			cageEffect = AudioLoader.getAudio("OGG", new FileInputStream("resources/music/wow.ogg"));
+			cageEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/wow.ogg"));
         } catch (IOException e) {
         	e.printStackTrace();
         }

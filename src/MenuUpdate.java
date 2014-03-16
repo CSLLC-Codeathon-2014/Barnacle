@@ -25,8 +25,6 @@ public class MenuUpdate extends MenuClick {
 	        //sets if player 1 is Doge
 			if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 				Map.dogepossible=true;
-				Map.dogepossible=true;
-				Map.secondinit();
 				Map.secondinit();
 				if(wowtime==true){
 				wowEffect.playAsSoundEffect(1.0f, 1.0f, false);
@@ -38,7 +36,6 @@ public class MenuUpdate extends MenuClick {
 			if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)){
 				Map.cagepossible=true;
 				Map.cagepossible=true;
-				Map.secondinit();
 				Map.secondinit();
 				if(cagetime==true){
 				cageEffect.playAsSoundEffect(1.0f, 1.0f, false);

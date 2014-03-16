@@ -1,24 +1,25 @@
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.Input;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioLoader;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.ResourceLoader;
+
 
 public class Map extends BasicGameState {
-	/*	
-	private int state;
+	/*private int state;
 	static int mapControl;
 	TrueTypeFont font;
 	static boolean dogepossible;
@@ -27,6 +28,17 @@ public class Map extends BasicGameState {
 	static Player player2;
 	static Image land;
 	static boolean IsThisAI = false;
+	static Image chicken1; //player 1 character's image
+	static Image chicken2;
+	Image fire1;
+	Image fire2;
+	Image hud;
+	static Image hit1; //"boom" image, when someone gets hit
+	static Image hit2;
+	//win related vars
+	Image wnner;
+	Image win1;
+	Image win2;
 	
 	public Map(int state){
 		 this.state = state;
@@ -37,6 +49,17 @@ public class Map extends BasicGameState {
 			throws SlickException {
 		player1 = new Player();
 		player2 = new Player();
+		land = new Image("resources/images/ToxicWasteland.png");
+		chicken1= new Image("resources/images/chickun1.png");
+	    chicken2= new Image("resources/images/chickun2.png");
+		fire1= new Image("resources/images/fure.png");
+		fire2= new Image("resources/images/fure.png");
+		hit1= new Image("resources/images/boom.png");
+		hit2= new Image("resources/images/boom.png");
+		hud= new Image("resources/images/hud.png");
+		wnner= new Image("resources/images/wnner.png");
+		win1= new Image("resources/images/1win.png");
+		win2= new Image("resources/images/2win.png");
 	}
 	
 	public static void secondinit()
@@ -133,7 +156,7 @@ public class Map extends BasicGameState {
 	TrueTypeFont font;
 	static boolean dogepossible;
 	static boolean cagepossible;
-    private Audio music;
+    private static Audio music;
 	static boolean musicCheck=true;
     private Audio wow;
     private Audio shoot;
@@ -219,6 +242,12 @@ public class Map extends BasicGameState {
 		land = new Image("resources/images/ice.png");	
 	if(mapControl==4)
 		land = new Image("resources/images/bg.png");
+	try {
+		music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/magic.ogg"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	
 	@Override
@@ -260,9 +289,9 @@ public class Map extends BasicGameState {
 			Mouse.setGrabbed(true);
 			try {
 				
-				if(mapControl==0)
-					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/magic.ogg"));
-				else if(mapControl==1)
+				//if(mapControl==0)
+					
+				if(mapControl==1)
 					music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/icu.ogg"));
 				else if(mapControl==2)
 					music = AudioLoader.getAudio("OGG",ResourceLoader.getResourceAsStream("resources/music/castle.ogg"));
